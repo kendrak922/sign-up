@@ -5,7 +5,8 @@
   "main": "app.js",
   "dependencies": {
     "firebase": "^7.15.5",
-    "google-auth-library": "^6.0.2"
+    "google-auth-library": "^6.0.2",
+    "moment": "^2.27.0"
   },
   "devDependencies": {},
   "scripts": {

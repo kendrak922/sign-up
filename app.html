@@ -9,6 +9,7 @@
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
          crossorigin="anonymous"></script>
+         <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
     <link type="text/css" rel="stylesheet" href="./app.css" media="screen,projection" />
@@ -29,7 +30,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Date</td>
+                        <td><span id="today"></span></td>
                         <td>10:30-2:30</td>
                         <td><span id="clickValue"><p>Shifts</p></span>
                             <a class="waves-effect waves-light btn" id="signup1">Sign-Up</a>
@@ -55,7 +56,5 @@
     </div>
     <script src=app.js></script>
     <script src="https://code.jquery.com/jquery.js"></script>
-    <!-- <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-database.js"></script> -->
 </body>
 </html>

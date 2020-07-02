@@ -1,8 +1,8 @@
 'use strict';
+$(document).ready(function () {
 
-$(document).ready(function(){
 
-var firebaseConfig = {
+  var firebaseConfig = {
     apiKey: "AIzaSyAj_PWrOTX-ywI3RTU4kFQzX2Nrw7_OEvI",
     authDomain: "volunteer-dev-3ced0.firebaseapp.com",
     databaseURL: "https://volunteer-dev-3ced0.firebaseio.com/",
@@ -15,20 +15,30 @@ var firebaseConfig = {
   // Initialize Firebase
 
   firebase.initializeApp(firebaseConfig);
-let count = 2;
-//display count
-firebase.database().ref().on("value",function(snapshot){
-  count= snapshot.val().firstShift
-$('#clickValue').html(count);  
-})
-//subtract
-$("#signup1").on('click', function(){
-  count--
-  firebase.database().ref().set({
-    firstShift:count
-  });
-})
+  let count = 2;
+  //display count
+  firebase.database().ref().on("value", function (snapshot) {
+    count = snapshot.val().firstShift
+    $('#clickValue').html(count);
+  })
+  //subtract
+    $("#signup1").on('click', function () {
+      if(count > 0){
+      count--
+      firebase.database().ref().set({
+        firstShift: count
+      })
+      return count;
+    }else{
+     alert('no available shifts');
+    }
+        });
 
 
+moment().format();
+
+const day = moment().format('MMMM Do YYYY');
+$("#today").html(day);
+console.log(day);
 
 });
