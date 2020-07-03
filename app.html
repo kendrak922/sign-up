@@ -6,18 +6,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link type="text/css" rel="stylesheet" href="./app.css" media="screen,projection" />
+    <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src=app.js></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
          crossorigin="anonymous"></script>
    
          <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-            
-    <link type="text/css" rel="stylesheet" href="./app.css" media="screen,projection" />
+    
 </head>
 <body>
     <div class="container">
@@ -37,7 +36,7 @@
                         <td><span id="today"></span></td>
                         <td>10:30-2:30</td>
                         <td><span id="clickValue"><p>Shifts</p></span>
-                            <a class="waves-effect btn modal-trigger" data-target="modal1" id="signup1">Sign-Up</a>
+                            <a class="waves-effect btn modal-trigger" data-target="modal1" id="signup1">Sign Up</a>
                         </td>
                     </tr>
                     <tr>
@@ -58,16 +57,32 @@
                 </tbody>
             </table>
             <div id="modal1" class="modal">
-                <div class="modal-content">
-                  <h4>Modal Header</h4>
-                  <p>A bunch of text</p>
-                </div>
+                <div class="modal-content row">
+                    <h2>Sign-Up Form</h2>
+                 <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input placeholder="Name" id="name" type  ='text' class = 'validate'>
+                            <label for='name'>Name:</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input placeholder="Phone" id="phone" type='phone' class = 'validate'>
+                            <label for='email'>Phone:</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                            <div class="input-field col s6">
+                                <input placeholder="Email" id="email" type='email' class='validate'>
+                                <label for='email'>Email:</label>
+                            </div>
+                        </div>
+                 </form>
                 <div class="modal-footer">
-                  <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                  <a href="#!" class="modal-close waves-effect waves-green btn-flat">Sign Up</a>
                 </div>
               </div>
     </div>
-    <script src=app.js></script>
-    <script src="https://code.jquery.com/jquery.js"></script>
 </body>
 </html>

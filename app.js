@@ -15,6 +15,7 @@ $(document).ready(function () {
   // Initialize Firebase
 
   firebase.initializeApp(firebaseConfig);
+  M.AutoInit();
   let count = 2;
   //display count
   firebase.database().ref().on("value", function (snapshot) {
@@ -28,9 +29,9 @@ $(document).ready(function () {
       firebase.database().ref().set({
         firstShift: count
       })
-      return count;
+      return count; 
     }else{
-     alert('No Available Shifts');
+      M.toast({html: 'No Availble Shifts'})
     }
         });
 
@@ -40,9 +41,6 @@ moment().format();
 const day = moment().format('MMMM Do YYYY');
 $("#today").html(day);
 
-//materialize
-$('.modal').modal();
-$('#modal1').modal('open');
 
 
 });
