@@ -9,17 +9,21 @@
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
          crossorigin="anonymous"></script>
+   
          <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            
     <link type="text/css" rel="stylesheet" href="./app.css" media="screen,projection" />
 </head>
 <body>
-    <div className="App">
-        <div className="row center-align">
-            <h1 class="blue">Volunteer Sign-up</h1>
+    <div class="container">
+        <div class="row center-align">
+            <h1>Volunteer Sign-up</h1>
         </div>
-        <header class="Volunteer Sign-Up"></header>
             <table class="highlight centered">
                 <thead>
                     <tr>
@@ -33,7 +37,7 @@
                         <td><span id="today"></span></td>
                         <td>10:30-2:30</td>
                         <td><span id="clickValue"><p>Shifts</p></span>
-                            <a class="waves-effect waves-light btn" id="signup1">Sign-Up</a>
+                            <a class="waves-effect btn modal-trigger" data-target="modal1" id="signup1">Sign-Up</a>
                         </td>
                     </tr>
                     <tr>
@@ -53,6 +57,15 @@
                     </tr>
                 </tbody>
             </table>
+            <div id="modal1" class="modal">
+                <div class="modal-content">
+                  <h4>Modal Header</h4>
+                  <p>A bunch of text</p>
+                </div>
+                <div class="modal-footer">
+                  <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                </div>
+              </div>
     </div>
     <script src=app.js></script>
     <script src="https://code.jquery.com/jquery.js"></script>

@@ -30,15 +30,19 @@ $(document).ready(function () {
       })
       return count;
     }else{
-     alert('no available shifts');
+     alert('No Available Shifts');
     }
         });
 
-
+//moment
 moment().format();
 
 const day = moment().format('MMMM Do YYYY');
 $("#today").html(day);
-console.log(day);
+
+//materialize
+$('.modal').modal();
+$('#modal1').modal('open');
+
 
 });
