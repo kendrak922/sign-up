@@ -1,15 +1,16 @@
 h1{
-    background-color:#03a9f4;
+    background-color:#87D68D;
     border-radius: 10px;
+    padding: 10px;
 }
 
 .btn{
     margin: 0 20px;
-    background-color: #558b2f;
+    background-color: #93B48B;
 }
 body{
-    background-color:#e0e0e0;
+    background-color: #F7FFF6;
 }
-.input-field input[type=text]:focus + label {
-    color: blue;
-  }
+.btn:active{
+    background-color: #BCEBCB;
+}
