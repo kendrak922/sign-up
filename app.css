@@ -1,16 +1,20 @@
 h1{
-    background-color:#87D68D;
+    background-color:#02C3BD;
     border-radius: 10px;
     padding: 10px;
 }
 
 .btn{
     margin: 0 20px;
-    background-color: #93B48B;
+    background-color: #037171;
 }
 body{
-    background-color: #F7FFF6;
+    background-color: #FBFBFF;
 }
-.btn:active{
-    background-color: #BCEBCB;
+btn:hover{
+    background-color:#02C3BD;
 }
+table.highlight>tbody>tr:hover{
+    background-color:#F3F0FA;
+}
+
