@@ -27,23 +27,50 @@ $(document).ready(function () {
   moment().format();
   let day = moment().format('MMM Do YYYY');
   // $("#today").html(day)
+const tableHTML = `<table class="highlight centered">
+<thead>
+    <tr>
+        <th>Date</th>
+        <th>Time</th>
+        <th>#Availble Shifts</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td><span class="today"></span></td>
+        <td class="1030">10:30-2:30</td>
+        <td class='shifts-available'><span id="clickValue"><p></p></span>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>2:30-4:30</td>
+        <td class='shifts-available'>2</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>4:30-6:30</td>
+        <td class='shifts-available'>2</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>6:30-8:30</td>
+        <td class='shifts-available'>2</td>
+    </tr>
+</tbody>
+</table>`
+
 
   //clone table
-  let table = $('table')
   for (let i = 0; i < 8; i++) {
-   
-    function addDate(date) {
-      let newDate = moment(day, 'MMM Do YYYY').add(date, 'd').format('MMM Do YYYY')
-      $('#today').html(newDate)
-      cloneTable(table)
-    }
-    function cloneTable(obj) {
-      obj.clone().appendTo('.container');
-    }
-    addDate(i)
-    
-    console.log(i)
 
+    function addDate(date) {
+      const newDate = moment(day, 'MMM Do YYYY').add(date, 'd').format('MMM Do YYYY');
+     $(tableHTML).appendTo('.container');
+    $('.today').eq(i).html(newDate);
+    }
+    console.log(i)
+    addDate(i)
   }
 
 
