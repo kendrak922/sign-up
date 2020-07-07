@@ -22,8 +22,33 @@ $(document).ready(function () {
     count = snapshot.val().firstShift
     $('#clickValue').html(count);
   })
- //append button
- $('.shifts-available').append('<a class="waves-effect btn modal-trigger" data-target="modal1" id="signup1">Sign Up</a>')
+
+  //moment
+  moment().format();
+  let day = moment().format('MMM Do YYYY');
+  // $("#today").html(day)
+
+  //clone table
+  let table = $('table')
+  for (let i = 0; i < 8; i++) {
+   
+    function addDate(date) {
+      let newDate = moment(day, 'MMM Do YYYY').add(date, 'd').format('MMM Do YYYY')
+      $('#today').html(newDate)
+      cloneTable(table)
+    }
+    function cloneTable(obj) {
+      obj.clone().appendTo('.container');
+    }
+    addDate(i)
+    
+    console.log(i)
+
+  }
+
+
+  //append button
+  $('.shifts-available').append('<a class="waves-effect btn modal-trigger" data-target="modal1" id="signup1">Sign Up</a>')
 
   //subtract
   $("#signup1").on('click', function () {
@@ -38,36 +63,30 @@ $(document).ready(function () {
       M.toast({ html: 'No Availble Shifts' })
     }
   });
- 
- 
-  //moment
-  moment().format();
 
-  const day = moment().format('MMMM Do YYYY');
-  $("#today").html(day);
 
   //add volunteer shift to database
 
-let database = firebase.database();
+  let database = firebase.database();
 
-  let name= '';
+  let name = '';
   let phone = '';
   let email = '';
   let shift = ''
   let date = '';
 
 
-  $(".submit").on('click', function(event){
-  event.preventDefault();
+  $(".submit").on('click', function (event) {
+    event.preventDefault();
 
-    name= $("#name").val().trim();
-    phone= $("#phone").val().trim();
-    email= $("#email").val().trim();
+    name = $("#name").val().trim();
+    phone = $("#phone").val().trim();
+    email = $("#email").val().trim();
 
-    let volunteer ={
+    let volunteer = {
       Name: name,
       Phone: phone,
-      Email : email,
+      Email: email,
     };
     database.ref().push(volunteer)
 
