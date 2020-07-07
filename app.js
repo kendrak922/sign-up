@@ -27,7 +27,7 @@ $(document).ready(function () {
   moment().format();
   let day = moment().format('MMM Do YYYY');
   // $("#today").html(day)
-const tableHTML = `<table class="highlight centered">
+  const tableHTML = `<table class="highlight centered">
 <thead>
     <tr>
         <th>Date</th>
@@ -38,23 +38,23 @@ const tableHTML = `<table class="highlight centered">
 <tbody>
     <tr>
         <td><span class="today"></span></td>
-        <td class="1030">10:30-2:30</td>
+        <td class="shift">10:30-2:30</td>
         <td class='shifts-available'><span id="clickValue"><p></p></span>
         </td>
     </tr>
     <tr>
         <td></td>
-        <td>2:30-4:30</td>
+        <td class="shift">2:30-4:30</td>
         <td class='shifts-available'>2</td>
     </tr>
     <tr>
         <td></td>
-        <td>4:30-6:30</td>
+        <td class="shift">4:30-6:30</td>
         <td class='shifts-available'>2</td>
     </tr>
     <tr>
         <td></td>
-        <td>6:30-8:30</td>
+        <td class="shift">6:30-8:30</td>
         <td class='shifts-available'>2</td>
     </tr>
 </tbody>
@@ -66,19 +66,22 @@ const tableHTML = `<table class="highlight centered">
 
     function addDate(date) {
       const newDate = moment(day, 'MMM Do YYYY').add(date, 'd').format('MMM Do YYYY');
-     $(tableHTML).appendTo('.container');
-    $('.today').eq(i).html(newDate);
+      $(tableHTML).appendTo('.container');
+      $('.today').eq(i).html(newDate);
     }
     console.log(i)
     addDate(i)
+
   }
 
+  $('.shifts-available').append(`<a class="waves-effect btn modal-trigger" data-target="modal1" id="signup1">Sign Up</a>`)
 
-  //append button
-  $('.shifts-available').append('<a class="waves-effect btn modal-trigger" data-target="modal1" id="signup1">Sign Up</a>')
 
   //subtract
   $("#signup1").on('click', function () {
+    let shift = $(this).parent().closest('tr').find('.shift').text()
+    $('.modal').data("shift",shift)
+    console.log($('.modal').data("shift"))
     if (count > 0) {
       count--
       firebase.database().ref().set({
@@ -99,28 +102,43 @@ const tableHTML = `<table class="highlight centered">
   let name = '';
   let phone = '';
   let email = '';
-  let shift = ''
-  let date = '';
+  let shift = '';
+ 
+
+  // $("a").on('click', function (event) {
+  //   event.preventDefault();
+  //   shift = $(this).closest('tr').find('.shift').text()
+  //   console.log(shift)
+  //   return shift;
+  // });
 
 
-  $(".submit").on('click', function (event) {
-    event.preventDefault();
+$(".submit").on('click', function (event,) {
+  event.preventDefault();
 
-    name = $("#name").val().trim();
-    phone = $("#phone").val().trim();
-    email = $("#email").val().trim();
+  name = $("#name").val().trim();
+  phone = $("#phone").val().trim();
+  email = $("#email").val().trim();
+  shift = $('.modal').data("shift").trim();
 
-    let volunteer = {
-      Name: name,
-      Phone: phone,
-      Email: email,
-    };
-    database.ref().push(volunteer)
+  
 
-    $('#name').val('');
-    $('#phone').val('');
-    $('#email').val('');
 
-  })
+  let volunteer = {
+    Name: name,
+    Phone: phone,
+    Email: email,
+    Shift: shift,
+  };
+
+  console.log(volunteer)
+  database.ref().push(volunteer)
+
+  $('#name').val('');
+  $('#phone').val('');
+  $('#email').val('');
+  $('.modal').data('shift', '')
+
+})
 
 });
