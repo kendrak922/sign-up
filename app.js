@@ -39,7 +39,8 @@ $(document).ready(function () {
     <tr>
         <td><span class="today"></span></td>
         <td class="shift">10:30-2:30</td>
-        <td class='shifts-available'><span id="clickValue"><p></p></span>
+        <td class='shifts-available'>
+        <span id="clickValue"><p></p></span>
         </td>
     </tr>
     <tr>
@@ -61,7 +62,7 @@ $(document).ready(function () {
 </table>`
 
 
-  //clone table
+  //clone table and add date
   for (let i = 0; i < 8; i++) {
 
     function addDate(date) {
@@ -69,19 +70,14 @@ $(document).ready(function () {
       $(tableHTML).appendTo('.container');
       $('.today').eq(i).html(newDate);
     }
-    console.log(i)
     addDate(i)
-
   }
 
-  $('.shifts-available').append(`<a class="waves-effect btn modal-trigger" data-target="modal1" id="signup1">Sign Up</a>`)
+  $('.shifts-available').append(`<a class="waves-effect btn modal-trigger signup1" data-target="modal1">Sign Up</a>`)
 
 
   //subtract
-  $("#signup1").on('click', function () {
-    let shift = $(this).parent().closest('tr').find('.shift').text()
-    $('.modal').data("shift",shift)
-    console.log($('.modal').data("shift"))
+  $(".signup1").on('click', function () {
     if (count > 0) {
       count--
       firebase.database().ref().set({
@@ -94,6 +90,12 @@ $(document).ready(function () {
     }
   });
 
+  $(".signup1").on('click',function () {
+    let shift = $(this).closest('tr').find('.shift').text()
+    $('.modal').data("shift", shift)
+    console.log(shift)
+  });
+
 
   //add volunteer shift to database
 
@@ -104,13 +106,6 @@ $(document).ready(function () {
   let email = '';
   let shift = '';
  
-
-  // $("a").on('click', function (event) {
-  //   event.preventDefault();
-  //   shift = $(this).closest('tr').find('.shift').text()
-  //   console.log(shift)
-  //   return shift;
-  // });
 
 
 $(".submit").on('click', function (event,) {
@@ -130,9 +125,8 @@ $(".submit").on('click', function (event,) {
     Email: email,
     Shift: shift,
   };
-
-  console.log(volunteer)
-  database.ref().push(volunteer)
+console.log(volunteer)
+  database.ref().child("volunteers").push(volunteer)
 
   $('#name').val('');
   $('#phone').val('');
