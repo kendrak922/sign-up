@@ -18,7 +18,7 @@ $(document).ready(function () {
   M.AutoInit();
   let count = 2;
   //display count
-  firebase.database().ref().on("value", function (snapshot) {
+  firebase.database().ref().on('value', function (snapshot) {
     count = snapshot.val().firstShift
     $('#clickValue').html(count);
   })
@@ -26,8 +26,10 @@ $(document).ready(function () {
   //moment
   moment().format();
   let day = moment().format('MMM Do YYYY');
-  // $("#today").html(day)
-  const tableHTML = `<table class="highlight centered">
+
+
+
+  const tableHTML = `<table class='highlight centered'>
 <thead>
     <tr>
         <th>Date</th>
@@ -37,25 +39,25 @@ $(document).ready(function () {
 </thead>
 <tbody>
     <tr>
-        <td><span class="today"></span></td>
-        <td class="shift">10:30-2:30</td>
+        <td><span class='today'></span></td>
+        <td class='shift'>10:30-2:30</td>
         <td class='shifts-available'>
-        <span id="clickValue"><p></p></span>
+        <span id='clickValue'><p></p></span>
         </td>
     </tr>
     <tr>
         <td></td>
-        <td class="shift">2:30-4:30</td>
+        <td class='shift'>2:30-4:30</td>
         <td class='shifts-available'>2</td>
     </tr>
     <tr>
         <td></td>
-        <td class="shift">4:30-6:30</td>
+        <td class='shift'>4:30-6:30</td>
         <td class='shifts-available'>2</td>
     </tr>
     <tr>
         <td></td>
-        <td class="shift">6:30-8:30</td>
+        <td class='shift'>6:30-8:30</td>
         <td class='shifts-available'>2</td>
     </tr>
 </tbody>
@@ -73,11 +75,11 @@ $(document).ready(function () {
     addDate(i)
   }
 
-  $('.shifts-available').append(`<a class="waves-effect btn modal-trigger signup1" data-target="modal1">Sign Up</a>`)
+  $('.shifts-available').append(`<a class='waves-effect btn modal-trigger signup1' data-target='modal1'>Sign Up</a>`)
 
 
   //subtract
-  $(".signup1").on('click', function () {
+  $('.signup1').on('click', function () {
     if (count > 0) {
       count--
       firebase.database().ref().set({
@@ -90,10 +92,12 @@ $(document).ready(function () {
     }
   });
 
-  $(".signup1").on('click',function () {
-    let shift = $(this).closest('tr').find('.shift').text()
-    $('.modal').data("shift", shift)
-    console.log(shift)
+  $('.signup1').on('click', function () {
+    let shift = $(this).closest('tr').find('.shift').text();
+    let date =  $(this).closest('tbody').eq(0).eq(0).find('.today').text();
+    $('.modal').data('shift', shift);
+    $('.modal').data('date', date);
+    console.log(date)
   });
 
 
@@ -105,34 +109,39 @@ $(document).ready(function () {
   let phone = '';
   let email = '';
   let shift = '';
- 
+  let date = '';
 
 
-$(".submit").on('click', function (event,) {
-  event.preventDefault();
 
-  name = $("#name").val().trim();
-  phone = $("#phone").val().trim();
-  email = $("#email").val().trim();
-  shift = $('.modal').data("shift").trim();
+  $('.submit').on('click', function (event) {
+    event.preventDefault();
 
-  
+    name = $('#name').val().trim();
+    phone = $('#phone').val().trim();
+    email = $('#email').val().trim();
+    shift = $('.modal').data('shift').trim();
+    date = $('.modal').data('date').trim();
 
 
-  let volunteer = {
-    Name: name,
-    Phone: phone,
-    Email: email,
-    Shift: shift,
-  };
-console.log(volunteer)
-  database.ref().child("volunteers").push(volunteer)
 
-  $('#name').val('');
-  $('#phone').val('');
-  $('#email').val('');
-  $('.modal').data('shift', '')
 
-})
+    let volunteer = {
+      Name: name,
+      Phone: phone,
+      Email: email,
+      Shift: shift,
+      Date: date,
+    };
+
+    console.log(volunteer)
+    database.ref().child('volunteers').push(volunteer)
+
+    $('#name').val('');
+    $('#phone').val('');
+    $('#email').val('');
+    $('.modal').data('shift','')
+    $('.modal').data('date', '')
+
+  })
 
 });
