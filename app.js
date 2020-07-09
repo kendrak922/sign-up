@@ -15,6 +15,7 @@ $(document).ready(function () {
   // Initialize Firebase
 
   firebase.initializeApp(firebaseConfig);
+  let database = firebase.database();
   M.AutoInit();
   let count = 2;
   //display count
@@ -79,18 +80,18 @@ $(document).ready(function () {
 
 
   //subtract
-  $('.signup1').on('click', function () {
-    if (count > 0) {
-      count--
-      firebase.database().ref().set({
-        firstShift: count
-      })
-      return count;
-    } else {
-      $(this).removeClass('modal-trigger')
-      M.toast({ html: 'No Availble Shifts' })
-    }
-  });
+  // $('.signup1').on('click', function () {
+  //   if (count > 0) {
+  //     count--
+  //     firebase.database().ref().child('shift-count').set({
+  //       firstShift: count
+  //     })
+  //     return count;
+  //   } else {
+  //     $(this).removeClass('modal-trigger')
+  //     M.toast({ html: 'No Availble Shifts' })
+  //   }
+  // });
 
   $('.signup1').on('click', function () {
     let shift = $(this).closest('tr').find('.shift').text();
@@ -102,8 +103,6 @@ $(document).ready(function () {
 
 
   //add volunteer shift to database
-
-  let database = firebase.database();
 
   let name = '';
   let phone = '';
@@ -133,7 +132,6 @@ $(document).ready(function () {
       Date: date,
     };
 
-    console.log(volunteer)
     database.ref().child('volunteers').push(volunteer)
 
     $('#name').val('');
