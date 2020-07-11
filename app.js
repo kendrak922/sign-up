@@ -71,14 +71,14 @@ $(document).ready(function () {
 
     function addDate(date) {
       const newDate = moment(day, 'MMM Do YYYY').add(date, 'd').format('MMM Do YYYY');
-      $(tableHTML).appendTo('.container');
+      $(tableHTML).appendTo('.home');
       $('.today').eq(i).html(newDate);
     }
     addDate(i)
   }
 
   $('.shifts-available').append(`<a class='waves-effect btn modal-trigger signup1' data-target='modal1'>Sign Up</a>`)
-  $(' <button class="btn-flat admin-button">Admin Sign in</button>').appendTo('.container');
+  $(" <a href='./admin.html' class='btn-flat admin-button'>Admin Sign in</a>").appendTo('.home');
 
   //subtract
   // $('.signup1').on('click', function () {
@@ -114,8 +114,6 @@ $(document).ready(function () {
     let date =  $(this).closest('tbody').eq(0).eq(0).find('.today').text();
     $('.modal').data('shift', shift);
     $('.modal').data('date', date);
-    console.log(date)
-    console.log(shift)
   });
 
 //cancel button
@@ -155,8 +153,7 @@ $('.cancel').on('click', function(){
       Shift: shift,
       Date: date,
     };
-    console.log(volunteer)
-    database.ref().child('volunteers').push(volunteer)
+    database.ref().push(volunteer)
  
 
     $('#name').val('');
@@ -166,6 +163,40 @@ $('.cancel').on('click', function(){
     $('.modal').data('date', '')
 
   })
-  
+  //add to table
+ database.ref().on("child_added", function(childSnapshot, prevChildKey){
+  $('.volunteer-roster').append(`<tr><td>${childSnapshot.val().Date}</td><td>${childSnapshot.val().Shift}</td><td>${childSnapshot.val().Name}</td><td>${childSnapshot.val().Phone}</td><td>${childSnapshot.val().Email}</td></tr>`)
+ })
 
+  
+  var validate = new Bouncer('form',{
+    patterns: {
+      email: /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*(\.\w{2,})+$/,
+      tel: /[-+]?[0-9]*[.,]?[0-9]+/,
+    }
+  });
+
+  document.addEventListener('bouncerFormInvalid', function (event) {
+    $('.submit').removeClass('modal-close') 
+        M.toast({ html: 'Sign Up Unsuccessful. Try Again' });
+        event.preventDefault;
+  }, false);
+
+
+  // document.addEventListener('bouncerFormValid', function (event) {
+
+  //   // The successfully validated form
+  //   let form = event.target;
+      
+  //   if(bouncerFormValid){
+  //     M.toast({ html: 'Sign Up Successful' });
+  //    } else {
+  //     $('.submit').removeClass('modal-close') 
+  //     M.toast({ html: 'Sign Up Unsuccessful. Try Again' })
+  //    }
+  
+  //   // If `disableSubmit` is true, you might use this to submit the form with Ajax
+  
+  // }, false);
+  
 });

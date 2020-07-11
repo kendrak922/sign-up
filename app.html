@@ -20,42 +20,39 @@
     
 </head>
 <body>
-    <div class="container">
+    <div class="container home">
         <div class="row center-align">
             <h1>Volunteer Sign-up</h1>
         </div>
-        <button class="btn-flat">Admin Sign in</button>
             <div id="modal1" class="modal">
                 <div class="modal-content row">
                     <h2>Sign-Up Form</h2>
                  <form class="form col s12">
                     <div class="row">
                         <div class="input-field col s12">
-                            <input placeholder="Name" id="name" name="name" type  ='text' class = 'validate'required>
+                            <input placeholder="Name" id="name" name="name" type  ='text' required>
                             <label for='name'>Name:</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input placeholder="Phone" id="phone"name="tel" type='text' class = 'validate' required>
+                            <input placeholder="Phone" id="phone"name="tel" type='text' required>
                             <label for='phone'>Phone:</label>
                         </div>
                     </div>
                     <div class="row">
                             <div class="input-field col s12">
-                                <input placeholder="Email" id='email' name="email" type='email' class='validate' required>
+                                <input placeholder="Email" id='email' name="email" type='email'  required>
                                 <label for='email'>Email:</label>
                             </div>
                         </div>
                  </form>
                 <div class="modal-footer">
                   <a href="#!" class="modal-close waves-effect btn-flat cancel">Cancel</a>
-                  <a href="#!" class="modal-close waves-effect btn-flat submit">Sign Up</a>
+                  <a href="#!" class="modal-close waves-effect btn-flat submit" value='submit'>Sign Up</a>
                 </div>
               </div>
     </div>
 </body>
 </html>
-<script>
-var validate = new Bouncer('form');
-</script>
+
