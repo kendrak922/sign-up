@@ -5,7 +5,10 @@
   "main": "app.js",
   "dependencies": {
     "firebase": "^7.15.5",
+    "formbouncerjs": "^1.4.6",
     "google-auth-library": "^6.0.2",
+    "jquery": "^3.5.1",
+    "jquery-validation": "^1.19.2",
     "materialize": "^1.0.0",
     "moment": "^2.27.0"
   },

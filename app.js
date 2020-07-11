@@ -17,12 +17,13 @@ $(document).ready(function () {
   firebase.initializeApp(firebaseConfig);
   let database = firebase.database();
   M.AutoInit();
+
   let count = 2;
   //display count
-  firebase.database().ref().on('value', function (snapshot) {
-    count = snapshot.val().firstShift
-    $('#clickValue').html(count);
-  })
+  // firebase.database().ref().on('value', function (snapshot) {
+  //   count = snapshot.val().firstShift
+  //   $('#clickValue').html(count);
+  // })
 
   //moment
   moment().format();
@@ -77,7 +78,7 @@ $(document).ready(function () {
   }
 
   $('.shifts-available').append(`<a class='waves-effect btn modal-trigger signup1' data-target='modal1'>Sign Up</a>`)
-
+  $(' <button class="btn-flat admin-button">Admin Sign in</button>').appendTo('.container');
 
   //subtract
   // $('.signup1').on('click', function () {
@@ -92,6 +93,21 @@ $(document).ready(function () {
   //     M.toast({ html: 'No Availble Shifts' })
   //   }
   // });
+  // $('.submit').on('click', function(e){
+  //   if ($('#phone').val() === ''){
+  //     $(this).removeClass('modal-close')
+  //     e.preventDefault();
+  //   } 
+  //   if ($('#name').val() === ''){
+  //     // prevent form from submitting
+  //     e.preventDefault();
+  //   } 
+  //   if ($('#email').val() === ''){
+  //     // prevent form from submitting
+  //     e.preventDefault();
+  //   }
+  
+  // });
 
   $('.signup1').on('click', function () {
     let shift = $(this).closest('tr').find('.shift').text();
@@ -99,7 +115,17 @@ $(document).ready(function () {
     $('.modal').data('shift', shift);
     $('.modal').data('date', date);
     console.log(date)
+    console.log(shift)
   });
+
+//cancel button
+$('.cancel').on('click', function(){
+  $('#name').val('');
+  $('#phone').val('');
+  $('#email').val('');
+  $('.modal').data('shift','')
+  $('.modal').data('date', '')
+})
 
 
   //add volunteer shift to database
@@ -112,8 +138,8 @@ $(document).ready(function () {
 
 
 
-  $('.submit').on('click', function (event) {
-    event.preventDefault();
+  $('.submit').on('click', function (e) {
+    e.preventDefault();
 
     name = $('#name').val().trim();
     phone = $('#phone').val().trim();
@@ -121,9 +147,7 @@ $(document).ready(function () {
     shift = $('.modal').data('shift').trim();
     date = $('.modal').data('date').trim();
 
-
-
-
+  
     let volunteer = {
       Name: name,
       Phone: phone,
@@ -131,8 +155,9 @@ $(document).ready(function () {
       Shift: shift,
       Date: date,
     };
-
+    console.log(volunteer)
     database.ref().child('volunteers').push(volunteer)
+ 
 
     $('#name').val('');
     $('#phone').val('');
@@ -141,5 +166,6 @@ $(document).ready(function () {
     $('.modal').data('date', '')
 
   })
+  
 
 });
