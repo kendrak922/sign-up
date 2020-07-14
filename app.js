@@ -173,7 +173,7 @@ $('.cancel').on('click', function(){
 
   //add to table
 database.ref().orderByChild('Date').on("child_added", function(childSnapshot, prevChildKey){
-  $('.volunteer-roster').append(`<tr><td>${childSnapshot.val().Date}</td><td>${childSnapshot.val().Shift}</td><td>${childSnapshot.val().Name}</td><td>${childSnapshot.val().Phone}</td><td>${childSnapshot.val().Email}</td></tr>`)
+  $('.volunteer-roster').append(`<tr><td class"target-date">${childSnapshot.val().Date}</td><td>${childSnapshot.val().Shift}</td><td>${childSnapshot.val().Name}</td><td>${childSnapshot.val().Phone}</td><td>${childSnapshot.val().Email}</td></tr>`)
  })
 
 
@@ -191,6 +191,7 @@ database.ref().orderByChild('Date').on("child_added", function(childSnapshot, pr
         event.preventDefault();
   }, false);
 
+console.log($('.target-date').text())
 
   // document.addEventListener('bouncerFormValid', function (event) {
 
