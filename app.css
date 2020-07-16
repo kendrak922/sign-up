@@ -17,3 +17,9 @@ btn:hover{
 table.highlight>tbody>tr:hover{
     background-color:#F3F0FA;
 }
+.valign-wrapper{
+padding: 30px;
+}
+a{
+    margin: auto;
+}

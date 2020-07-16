@@ -78,7 +78,7 @@ $(document).ready(function () {
   }
 
   $('.shifts-available').append(`<a class='waves-effect btn modal-trigger signup1' data-target='modal1'>Sign Up</a>`)
-  $(" <a href='./admin.html' class='btn-flat admin-button'>Admin Sign in</a>").appendTo('.home');
+  $("<div class='valign-wrapper'> <a href='./admin.html' class='btn-flat right-align admin-button'>Admin Sign in</a></div>").appendTo('.home');
 
   //subtract
   // $('.signup1').on('click', function () {
@@ -191,7 +191,7 @@ database.ref().orderByChild('Date').on("child_added", function(childSnapshot, pr
         event.preventDefault();
   }, false);
 
-console.log($('.target-date').text())
+
 
   // document.addEventListener('bouncerFormValid', function (event) {
 
