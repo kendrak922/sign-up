@@ -9,50 +9,73 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link type="text/css" rel="stylesheet" href="./app.css" media="screen,projection" />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/cferdinandi/bouncer@1/dist/bouncer.polyfills.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src=app.js></script>
-   
-         <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-    
+
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
 </head>
+
 <body>
     <div class="container home">
         <div class="row center-align">
             <h1>Volunteer Sign-up</h1>
         </div>
-            <div id="modal1" class="modal">
-                <div class="modal-content row">
-                    <h2>Sign-Up Form</h2>
-                 <form class="form col s12">
+        <div id="modal1" class="modal">
+            <div class="modal-content row">
+                <h2>Sign-Up Form</h2>
+                <form class="form col s12">
                     <div class="row">
                         <div class="input-field col s12">
-                            <input placeholder="Name" id="name" name="name" type  ='text' required>
+                            <input placeholder="Name" id="name" name="name" type='text' required>
                             <label for='name'>Name:</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input placeholder="Phone" id="phone"name="tel" type='text' required>
+                            <input placeholder="Phone" id="phone" name="tel" type='text' required>
                             <label for='phone'>Phone:</label>
                         </div>
                     </div>
                     <div class="row">
-                            <div class="input-field col s12">
-                                <input placeholder="Email" id='email' name="email" type='email'  required>
-                                <label for='email'>Email:</label>
-                            </div>
+                        <div class="input-field col s12">
+                            <input placeholder="Email" id='email' name="email" type='email' required>
+                            <label for='email'>Email:</label>
                         </div>
-                 </form>
+                    </div>
+                </form>
                 <div class="modal-footer">
-                  <a href="#!" class="modal-close waves-effect btn-flat cancel">Cancel</a>
-                  <a href="#!" class="modal-close waves-effect btn-flat submit" value='submit'>Sign Up</a>
+                    <a href="#!" class="modal-close waves-effect btn-flat cancel">Cancel</a>
+                  <button><a href='#!' class="waves-effect btn-flat submit" value='submit'>Sign Up</a></button>
                 </div>
-              </div>
+            </div>
+        </div>
+        <div id="modal2" class="modal">
+            <div class="modal-content row">
+                <h2>Admin Log In</h2>
+                <form class="form col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input placeholder="Email" id="txtEmail" name="email" type='email' required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input placeholder="Password" id='txtPassword' name='password' type='password' required>
+                        </div>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect btn-flat cancel">Cancel</a>
+                    <a href="#!" class="modal-close waves-effect btn-flat" id='adminSubmit' value='admin-submit'>Sign In</a>
+                </div>
+            </div>
+        </div>
     </div>
+    <script src=app.js></script>
 </body>
-</html>
 
+</html>

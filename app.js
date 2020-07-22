@@ -15,7 +15,8 @@ $(document).ready(function () {
   // Initialize Firebase
 
   firebase.initializeApp(firebaseConfig);
-  let database = firebase.database();
+  const database = firebase.database();
+  const auth = firebase.auth();
   M.AutoInit();
 
   let count = 2;
@@ -78,8 +79,8 @@ $(document).ready(function () {
   }
 
   $('.shifts-available').append(`<a class='waves-effect btn modal-trigger signup1' data-target='modal1'>Sign Up</a>`)
-  $("<div class='valign-wrapper'> <a href='./admin.html' class='btn-flat right-align admin-button'>Admin Sign in</a></div>").appendTo('.home');
-
+  $(`<div class='valign-wrapper'> <a class='btn-flat right-align admin-button modal-trigger' data-target='modal2' id='sign-in-modal'>Admin Sign in</a></div>`).appendTo('.home');
+  $(`<div class='valign-wrapper'><a href="./admin.html" class='btn-flat hide' id='roster'>View Roster</a><a href="#!" class="waves-effect btn-flat hide" id='btn-logout'>Sign Out</a></div>`).appendTo('.home');
   //subtract
   // $('.signup1').on('click', function () {
   //   if (count > 0) {
@@ -106,24 +107,24 @@ $(document).ready(function () {
   //     // prevent form from submitting
   //     e.preventDefault();
   //   }
-  
+
   // });
 
   $('.signup1').on('click', function () {
     let shift = $(this).closest('tr').find('.shift').text();
-    let date =  $(this).closest('tbody').eq(0).eq(0).find('.today').text();
+    let date = $(this).closest('tbody').eq(0).eq(0).find('.today').text();
     $('.modal').data('shift', shift);
     $('.modal').data('date', date);
   });
 
-//cancel button
-$('.cancel').on('click', function(){
-  $('#name').val('');
-  $('#phone').val('');
-  $('#email').val('');
-  $('.modal').data('shift','')
-  $('.modal').data('date', '')
-})
+  //cancel button
+  $('.cancel').on('click', function () {
+    $('#name').val('');
+    $('#phone').val('');
+    $('#email').val('');
+    $('.modal').data('shift', '')
+    $('.modal').data('date', '')
+  })
 
 
   //add volunteer shift to database
@@ -135,9 +136,49 @@ $('.cancel').on('click', function(){
   let date = '';
 
 
+  //add to table
+  database.ref().orderByChild('Date').on("child_added", function (childSnapshot, prevChildKey) {
+    $('.volunteer-roster').append(`<tr><td class"target-date">${childSnapshot.val().Date}</td><td>${childSnapshot.val().Shift}</td><td>${childSnapshot.val().Name}</td><td>${childSnapshot.val().Phone}</td><td>${childSnapshot.val().Email}</td></tr>`)
+  })
+
+
+
+  // var validate = new Bouncer('form', {
+  //   patterns: {
+  //     email: /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*(\.\w{2,})+$/,
+  //     phone: /[-+]?[0-9]*[.,]?[0-9]+/,
+  //   },
+  //   disableSubmit: true
+  // });
+
+
+
+  // document.addEventListener('bouncerFormInvalid', function (event) {
+  //   $('.submit').removeClass('modal-close');
+  //   M.toast({ html: 'Sign Up Unsuccessful. Try Again' });
+  //   event.preventDefault();
+  // }, false);
+
+
+
+  // document.addEventListener('bouncerFormValid', function (event) {
+
+  //   // The successfully validated form
+  //   let form = event.target;
+
+  //   if (bouncerFormValid) {
+  //     M.toast({ html: 'Sign Up Successful' });
+  //   } else {
+  //     $('.submit').removeClass('modal-close')
+  //     M.toast({ html: 'Sign Up Unsuccessful. Try Again' })
+  //   }
+
+    // If `disableSubmit` is true, you might use this to submit the form with Ajax
+
+  // }, false);
 
   $('.submit').on('click', function (e) {
-    e.preventDefault();
+    // e.preventDefault();
 
     name = $('#name').val().trim();
     phone = $('#phone').val().trim();
@@ -145,7 +186,7 @@ $('.cancel').on('click', function(){
     shift = $('.modal').data('shift').trim();
     date = $('.modal').data('date').trim();
 
-  
+
     let volunteer = {
       Name: name,
       Phone: phone,
@@ -159,54 +200,48 @@ $('.cancel').on('click', function(){
     $('#name').val('');
     $('#phone').val('');
     $('#email').val('');
-    $('.modal').data('shift','')
+    $('.modal').data('shift', '')
     $('.modal').data('date', '')
 
   })
 
-// database.ref().on("child_added",function(childSnapshot, preChildKey){
-// let orderBy = childSnapshot.val().Date
-// parseInt(orderBy)
-// console.log(orderBy)
-// })
+  ///authorization
+  const btnLogin = document.getElementById('adminSubmit');
+  const btnLogOut = document.getElementById('btn-logout');
+  const btnRoster = document.getElementById('roster')
+  const btnModal = document.getElementById('sign-in-modal')
 
 
-  //add to table
-database.ref().orderByChild('Date').on("child_added", function(childSnapshot, prevChildKey){
-  $('.volunteer-roster').append(`<tr><td class"target-date">${childSnapshot.val().Date}</td><td>${childSnapshot.val().Shift}</td><td>${childSnapshot.val().Name}</td><td>${childSnapshot.val().Phone}</td><td>${childSnapshot.val().Email}</td></tr>`)
- })
+  btnLogin.addEventListener('click', e => {
+
+    const email = txtEmail.value;
+    const pass = txtPassword.value;
+    const auth = firebase.auth();
+
+    const promise = auth.signInWithEmailAndPassword(email, pass);
+    promise.catch(e => console.log(e.message))
+  })
 
 
-  
-  var validate = new Bouncer('form',{
-    patterns: {
-      email: /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*(\.\w{2,})+$/,
-      phone: /[-+]?[0-9]*[.,]?[0-9]+/,
+  firebase.auth().onAuthStateChanged(firebaseUser => {
+    if (firebaseUser) {
+
+      console.log(firebaseUser)
+      console.log('logged in')
+      btnLogOut.classList.remove('hide');
+      btnRoster.classList.remove('hide')
+      btnModal.classList.add('hide')
+    } else {
+      btnLogOut.classList.add('hide');
+      btnRoster.classList.add('hide')
+      btnModal.classList.remove('hide')
+      console.log('not logged in')
     }
-  });
+  })
 
-  document.addEventListener('bouncerFormInvalid', function (event) {
-    $('.submit').removeClass('modal-close'); 
-        M.toast({ html: 'Sign Up Unsuccessful. Try Again' });
-        event.preventDefault();
-  }, false);
+  btnLogOut.addEventListener('click', e => {
+    firebase.auth().signOut();
+  })
 
 
-
-  // document.addEventListener('bouncerFormValid', function (event) {
-
-  //   // The successfully validated form
-  //   let form = event.target;
-      
-  //   if(bouncerFormValid){
-  //     M.toast({ html: 'Sign Up Successful' });
-  //    } else {
-  //     $('.submit').removeClass('modal-close') 
-  //     M.toast({ html: 'Sign Up Unsuccessful. Try Again' })
-  //    }
-  
-  //   // If `disableSubmit` is true, you might use this to submit the form with Ajax
-  
-  // }, false);
-  
 });
