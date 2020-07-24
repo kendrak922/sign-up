@@ -32,6 +32,7 @@ $(document).ready(function () {
 
 
 
+
   const tableHTML = `<table class='highlight centered'>
 <thead>
     <tr>
@@ -137,48 +138,34 @@ $(document).ready(function () {
 
 
   //add to table
-  database.ref().orderByChild('Date').on("child_added", function (childSnapshot, prevChildKey) {
+  database.ref().child('/volunteers').orderByChild('Date').on("child_added", function (childSnapshot, prevChildKey) {
     $('.volunteer-roster').append(`<tr><td class"target-date">${childSnapshot.val().Date}</td><td>${childSnapshot.val().Shift}</td><td>${childSnapshot.val().Name}</td><td>${childSnapshot.val().Phone}</td><td>${childSnapshot.val().Email}</td></tr>`)
   })
 
 
+let child = database.ref().child('volunteers')
+  
+    database.ref().child('/volunteers').on("child_added",function(childSnapshot, prevChildKey){
+      if(childSnapshot.val().Date < day){
+        childSnapshot.val().Date
+      //  database.ref().update('/volunteers', null);
+      }
+});
+    // firebase.database().ref('/volunteer-dev-3ced0' + key).remove({
 
-  // var validate = new Bouncer('form', {
-  //   patterns: {
-  //     email: /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*(\.\w{2,})+$/,
-  //     phone: /[-+]?[0-9]*[.,]?[0-9]+/,
-  //   },
-  //   disableSubmit: true
-  // });
-
-
-
-  // document.addEventListener('bouncerFormInvalid', function (event) {
-  //   $('.submit').removeClass('modal-close');
-  //   M.toast({ html: 'Sign Up Unsuccessful. Try Again' });
-  //   event.preventDefault();
-  // }, false);
-
-
-
-  // document.addEventListener('bouncerFormValid', function (event) {
-
-  //   // The successfully validated form
-  //   let form = event.target;
-
-  //   if (bouncerFormValid) {
-  //     M.toast({ html: 'Sign Up Successful' });
-  //   } else {
-  //     $('.submit').removeClass('modal-close')
-  //     M.toast({ html: 'Sign Up Unsuccessful. Try Again' })
-  //   }
-
-    // If `disableSubmit` is true, you might use this to submit the form with Ajax
-
-  // }, false);
+    // }, function(error) {
+    //   if (error) {
+    //   console.log('nope')
+    //   } else {
+    //     console.log('yes')
+    //   }
+    // });
+  // }
+  
 
   $('.submit').on('click', function (e) {
-    // e.preventDefault();
+    let phoneRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/
+    let emailRegex = /^\S+@\S+\.\S+$/
 
     name = $('#name').val().trim();
     phone = $('#phone').val().trim();
@@ -186,24 +173,42 @@ $(document).ready(function () {
     shift = $('.modal').data('shift').trim();
     date = $('.modal').data('date').trim();
 
+    if ($('#phone').val() === '' || $('#name').val() === '' || $('#email').val() === '') {
+      e.preventDefault();
+    } else if(!phoneRegex.test(phone)){
+      e.preventDefault()
+    }else if(!emailRegex.test(email)){
+      e.preventDefault()
+    }else {
 
-    let volunteer = {
-      Name: name,
-      Phone: phone,
-      Email: email,
-      Shift: shift,
-      Date: date,
-    };
 
 
-    database.ref().push(volunteer)
-    $('#name').val('');
-    $('#phone').val('');
-    $('#email').val('');
-    $('.modal').data('shift', '')
-    $('.modal').data('date', '')
+      let volunteer = {
+        Name: name,
+        Phone: phone,
+        Email: email,
+        Shift: shift,
+        Date: date,
+      };
 
+
+      database.ref().child('volunteers').push(volunteer)
+
+      $('#name').val('');
+      $('#phone').val('');
+      $('#email').val('');
+      $('.modal').data('shift', '')
+      $('.modal').data('date', '')
+
+      $('.submit').addClass('modal-close')
+    }
   })
+  var validate = new Bouncer('form',{
+    patterns: {
+          email: /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*(\.\w{2,})+$/,
+          phone: /[-+]?[0-9]*[.,]?[0-9]+/,
+        }
+  });
 
   ///authorization
   const btnLogin = document.getElementById('adminSubmit');
