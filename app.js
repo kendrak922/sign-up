@@ -141,112 +141,115 @@ $(document).ready(function () {
   database.ref().child('/volunteers').orderByChild('Date').on("child_added", function (childSnapshot, prevChildKey) {
     $('.volunteer-roster').append(`<tr><td class"target-date">${childSnapshot.val().Date}</td><td>${childSnapshot.val().Shift}</td><td>${childSnapshot.val().Name}</td><td>${childSnapshot.val().Phone}</td><td>${childSnapshot.val().Email}</td></tr>`)
   })
-
-
-let child = database.ref().child('volunteers')
-  
-    database.ref().child('/volunteers').on("child_added",function(childSnapshot, prevChildKey){
-      if(childSnapshot.val().Date < day){
-        childSnapshot.val().Date
-      //  database.ref().update('/volunteers', null);
-      }
-});
-    // firebase.database().ref('/volunteer-dev-3ced0' + key).remove({
-
-    // }, function(error) {
-    //   if (error) {
-    //   console.log('nope')
-    //   } else {
-    //     console.log('yes')
-    //   }
-    // });
-  // }
   
 
-  $('.submit').on('click', function (e) {
-    let phoneRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/
-    let emailRegex = /^\S+@\S+\.\S+$/
-
-    name = $('#name').val().trim();
-    phone = $('#phone').val().trim();
-    email = $('#email').val().trim();
-    shift = $('.modal').data('shift').trim();
-    date = $('.modal').data('date').trim();
-
-    if ($('#phone').val() === '' || $('#name').val() === '' || $('#email').val() === '') {
-      e.preventDefault();
-    } else if(!phoneRegex.test(phone)){
-      e.preventDefault()
-    }else if(!emailRegex.test(email)){
-      e.preventDefault()
-    }else {
 
 
+  // database.ref().child('/volunteers').on("child_added", function (childSnapshot, prevChildKey) {
 
-      let volunteer = {
-        Name: name,
-        Phone: phone,
-        Email: email,
-        Shift: shift,
-        Date: date,
-      };
+// let reference = database.ref.child('/volunteers')
 
-
-      database.ref().child('volunteers').push(volunteer)
-
-      $('#name').val('');
-      $('#phone').val('');
-      $('#email').val('');
-      $('.modal').data('shift', '')
-      $('.modal').data('date', '')
-
-      $('.submit').addClass('modal-close')
-    }
-  })
-  var validate = new Bouncer('form',{
-    patterns: {
-          email: /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*(\.\w{2,})+$/,
-          phone: /[-+]?[0-9]*[.,]?[0-9]+/,
-        }
+database.ref().child('/volunteers').orderByChild("Date").equalTo("Date" < day)
+.once('value').then(function(snapshot){
+    snapshot.forEach(childSnapshot){
+      ref.child(childSnapshot.key.remove())
+    });
   });
 
-  ///authorization
-  const btnLogin = document.getElementById('adminSubmit');
-  const btnLogOut = document.getElementById('btn-logout');
-  const btnRoster = document.getElementById('roster')
-  const btnModal = document.getElementById('sign-in-modal')
+      // if (childSnapshot.val().Date < day) {
+      //     console.log(childSnapshot.val().Date)
+      // }
+
+  
+// });
+
+        // database.ref().child(key).update(null);
+     
 
 
-  btnLogin.addEventListener('click', e => {
+$('.submit').on('click', function (e) {
+  let phoneRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/
+  let emailRegex = /^\S+@\S+\.\S+$/
 
-    const email = txtEmail.value;
-    const pass = txtPassword.value;
-    const auth = firebase.auth();
+  name = $('#name').val().trim();
+  phone = $('#phone').val().trim();
+  email = $('#email').val().trim();
+  shift = $('.modal').data('shift').trim();
+  date = $('.modal').data('date').trim();
 
-    const promise = auth.signInWithEmailAndPassword(email, pass);
-    promise.catch(e => console.log(e.message))
-  })
+  if ($('#phone').val() === '' || $('#name').val() === '' || $('#email').val() === '') {
+    e.preventDefault();
+  } else if (!phoneRegex.test(phone)) {
+    e.preventDefault()
+  } else if (!emailRegex.test(email)) {
+    e.preventDefault()
+  } else {
 
 
-  firebase.auth().onAuthStateChanged(firebaseUser => {
-    if (firebaseUser) {
 
-      console.log(firebaseUser)
-      console.log('logged in')
-      btnLogOut.classList.remove('hide');
-      btnRoster.classList.remove('hide')
-      btnModal.classList.add('hide')
-    } else {
-      btnLogOut.classList.add('hide');
-      btnRoster.classList.add('hide')
-      btnModal.classList.remove('hide')
-      console.log('not logged in')
-    }
-  })
+    let volunteer = {
+      Name: name,
+      Phone: phone,
+      Email: email,
+      Shift: shift,
+      Date: date,
+    };
 
-  btnLogOut.addEventListener('click', e => {
-    firebase.auth().signOut();
-  })
+
+    database.ref().child('volunteers').push(volunteer)
+
+    $('#name').val('');
+    $('#phone').val('');
+    $('#email').val('');
+    $('.modal').data('shift', '')
+    $('.modal').data('date', '')
+
+    $('.submit').addClass('modal-close')
+  }
+})
+var validate = new Bouncer('form', {
+  patterns: {
+    email: /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*(\.\w{2,})+$/,
+    tel: /[-+]?[0-9]*[.,]?[0-9]+/,
+  }
+});
+
+///authorization
+const btnLogin = document.getElementById('adminSubmit');
+const btnLogOut = document.getElementById('btn-logout');
+const btnRoster = document.getElementById('roster')
+const btnModal = document.getElementById('sign-in-modal')
+
+
+btnLogin.addEventListener('click', e => {
+
+  const email = txtEmail.value;
+  const pass = txtPassword.value;
+  const auth = firebase.auth();
+
+  const promise = auth.signInWithEmailAndPassword(email, pass);
+  promise.catch(e => console.log(e.message))
+})
+
+
+firebase.auth().onAuthStateChanged(firebaseUser => {
+  if (firebaseUser) {
+
+    btnLogOut.classList.remove('hide');
+    btnRoster.classList.remove('hide')
+    btnModal.classList.add('hide')
+  } else {
+
+    btnLogOut.classList.add('hide');
+    btnRoster.classList.add('hide')
+    btnModal.classList.remove('hide')
+    console.log('not logged in')
+  }
+})
+
+btnLogOut.addEventListener('click', e => {
+  firebase.auth().signOut();
+})
 
 
 });
