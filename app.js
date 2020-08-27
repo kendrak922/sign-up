@@ -95,21 +95,7 @@ $(document).ready(function () {
   //     M.toast({ html: 'No Availble Shifts' })
   //   }
   // });
-  // $('.submit').on('click', function(e){
-  //   if ($('#phone').val() === ''){
-  //     $(this).removeClass('modal-close')
-  //     e.preventDefault();
-  //   } 
-  //   if ($('#name').val() === ''){
-  //     // prevent form from submitting
-  //     e.preventDefault();
-  //   } 
-  //   if ($('#email').val() === ''){
-  //     // prevent form from submitting
-  //     e.preventDefault();
-  //   }
 
-  // });
 
   $('.signup1').on('click', function () {
     let shift = $(this).closest('tr').find('.shift').text();
@@ -149,12 +135,12 @@ $(document).ready(function () {
 
 // let reference = database.ref.child('/volunteers')
 
-database.ref().child('/volunteers').orderByChild("Date").equalTo("Date" < day)
-.once('value').then(function(snapshot){
-    snapshot.forEach(childSnapshot){
-      ref.child(childSnapshot.key.remove())
-    });
-  });
+// database.ref().child('/volunteers').orderByChild("Date").equalTo("Date" < day)
+// .once('value').then(function(snapshot){
+//     snapshot.forEach(childSnapshot){
+//       ref.child(childSnapshot.key.remove())
+//     });
+//   });
 
       // if (childSnapshot.val().Date < day) {
       //     console.log(childSnapshot.val().Date)
@@ -180,12 +166,11 @@ $('.submit').on('click', function (e) {
   if ($('#phone').val() === '' || $('#name').val() === '' || $('#email').val() === '') {
     e.preventDefault();
   } else if (!phoneRegex.test(phone)) {
+    
     e.preventDefault()
   } else if (!emailRegex.test(email)) {
     e.preventDefault()
   } else {
-
-
 
     let volunteer = {
       Name: name,
