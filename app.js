@@ -151,7 +151,6 @@ $(document).ready(function () {
 
         // database.ref().child(key).update(null);
    let dateCompare =  $('.target-date').html()
-   console.log(dateCompare)
 
 
 $('.submit').on('click', function (e) {
