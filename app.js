@@ -125,7 +125,7 @@ $(document).ready(function () {
 
   //add to table
   database.ref().child('/volunteers').orderByChild('Date').on("child_added", function (childSnapshot, prevChildKey) {
-    $('.volunteer-roster').append(`<tr><td class"target-date">${childSnapshot.val().Date}</td><td>${childSnapshot.val().Shift}</td><td>${childSnapshot.val().Name}</td><td>${childSnapshot.val().Phone}</td><td>${childSnapshot.val().Email}</td></tr>`)
+    $('.volunteer-roster').append(`<tr><td class="target-date">${childSnapshot.val().Date}</td><td>${childSnapshot.val().Shift}</td><td>${childSnapshot.val().Name}</td><td>${childSnapshot.val().Phone}</td><td>${childSnapshot.val().Email}</td></tr>`)
   })
   
 
@@ -150,7 +150,8 @@ $(document).ready(function () {
 // });
 
         // database.ref().child(key).update(null);
-     
+   let dateCompare =  $('.target-date').html()
+   console.log(dateCompare)
 
 
 $('.submit').on('click', function (e) {
