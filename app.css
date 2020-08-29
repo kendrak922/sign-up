@@ -23,3 +23,35 @@ padding: 30px;
 a{
     margin: auto;
 }
+@media only screen and (max-width: 768px) {
+    .modal-footer .btn-flat{
+    
+        font-size: 12px;
+    }
+    .modal h2{
+       font-size: 30px;
+    }
+    .table-container{
+        max-width: 700px;
+     overflow: scroll;
+    }
+    .table-header{
+        position: sticky;
+        font-size: 3rem;
+        padding: 0;
+    }
+    /* th{
+        position: sticky;
+        top: -1px;
+        z-index: 2;
+    } */
+        th:first-of-type {
+          left: 0;
+          z-index: 3;
+        }
+        /* tbody tr td:first-of-type {
+            position: sticky;
+            left: -1px;
+            z-index: 1;
+          } */
+}
