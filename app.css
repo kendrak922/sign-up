@@ -39,19 +39,6 @@ a{
         position: sticky;
         font-size: 3rem;
         padding: 0;
+        margin: 1rem;
     }
-    /* th{
-        position: sticky;
-        top: -1px;
-        z-index: 2;
-    } */
-        th:first-of-type {
-          left: 0;
-          z-index: 3;
-        }
-        /* tbody tr td:first-of-type {
-            position: sticky;
-            left: -1px;
-            z-index: 1;
-          } */
 }
