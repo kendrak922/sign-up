@@ -70,7 +70,6 @@ $(document).ready(function () {
 
   //clone table and add date
   for (let i = 0; i < 8; i++) {
-
     function addDate(date) {
       const newDate = moment(day, 'MMM Do YYYY').add(date, 'd').format('MMM Do YYYY');
       $(tableHTML).appendTo('.home');
@@ -125,7 +124,7 @@ $(document).ready(function () {
 
   //add to table
   database.ref().child('/volunteers').orderByChild('Date').on("child_added", function (childSnapshot, prevChildKey) {
-    $('.volunteer-roster').append(`<tr><td class="target-date">${childSnapshot.val().Date}</td><td>${childSnapshot.val().Shift}</td><td>${childSnapshot.val().Name}</td><td>${childSnapshot.val().Phone}</td><td>${childSnapshot.val().Email}</td></tr>`)
+    $('#volunteer-roster').append(`<tr class="item"><td class="target-date">${childSnapshot.val().Date}</td><td>${childSnapshot.val().Shift}</td><td>${childSnapshot.val().Name}</td><td>${childSnapshot.val().Phone}</td><td>${childSnapshot.val().Email}</td></tr>`)
   })
   
 
@@ -149,9 +148,15 @@ $(document).ready(function () {
   
 // });
 
-        // database.ref().child(key).update(null);
-   let dateCompare =  $('.target-date').html()
+  //       // database.ref().child(key).update(null);
+// let table = getElementById('volunteer-roster')
+//  $('#volunteer-roster>tbody>tr.item>td.target-date').each(function(){
+//   let dateCompare = $(this).text()
+//   console.log(dateCompare)
+//  });
 
+
+$('.target-date').css('background-color', 'yellow')
 
 $('.submit').on('click', function (e) {
   let phoneRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/
