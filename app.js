@@ -148,15 +148,14 @@ $(document).ready(function () {
   
 // });
 
-  //       // database.ref().child(key).update(null);
-// let table = getElementById('volunteer-roster')
-//  $('#volunteer-roster>tbody>tr.item>td.target-date').each(function(){
-//   let dateCompare = $(this).text()
-//   console.log(dateCompare)
-//  });
+
+ $('tr.item').each(function(){
+  let dateCompare = $('.target-date').text()
+  console.log(dateCompare)
+ });
 
 
-$('.target-date').css('background-color', 'yellow')
+
 
 $('.submit').on('click', function (e) {
   let phoneRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/
