@@ -26,9 +26,7 @@ $(document).ready(function () {
   //   $('#clickValue').html(count);
   // })
 
-  //moment
-  moment().format();
-  let day = moment().format('MMM Do YYYY');
+
 
 
 
@@ -68,15 +66,33 @@ $(document).ready(function () {
 </table>`
 
 
+
   //clone table and add date
-  for (let i = 0; i < 8; i++) {
-    function addDate(date) {
-      const newDate = moment(day, 'MMM Do YYYY').add(date, 'd').format('MMM Do YYYY');
-      $(tableHTML).appendTo('.home');
-      $('.today').eq(i).html(newDate);
-    }
-    addDate(i)
-  }
+  for (let i = 0; i < 8; ++i) {
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ]
+        // Increment current date by day * i
+        const newDate = new Date(Date.now() + (1000 * 60 * 60 * 24 * i));
+        const d = newDate.getDate()
+        const y = newDate.getFullYear()
+        const monthIndex = newDate.getMonth()
+        const monthName = months[monthIndex]
+        const formatted = `${monthName} ${d}, ${y}`
+        $(tableHTML).appendTo('.home');
+        $('.today').eq(i).html(formatted);
+      }
 
   $('.shifts-available').append(`<a class='waves-effect btn modal-trigger signup1' data-target='modal1'>Sign Up</a>`)
   $(`<div class='valign-wrapper'> <a class='btn-flat right-align admin-button modal-trigger' data-target='modal2' id='sign-in-modal'>Admin Sign in</a></div>`).appendTo('.home');
@@ -124,35 +140,20 @@ $(document).ready(function () {
 
   //add to table
   database.ref().child('/volunteers').orderByChild('Date').on("child_added", function (childSnapshot, prevChildKey) {
+
     $('#volunteer-roster').append(`<tr class="item"><td class="target-date">${childSnapshot.val().Date}</td><td>${childSnapshot.val().Shift}</td><td>${childSnapshot.val().Name}</td><td>${childSnapshot.val().Phone}</td><td>${childSnapshot.val().Email}</td></tr>`)
   })
   
 
 
 
-  // database.ref().child('/volunteers').on("child_added", function (childSnapshot, prevChildKey) {
+//   database.ref().child('/volunteers').on("child_added", function (childSnapshot, prevChildKey) {
 
-// let reference = database.ref.child('/volunteers')
-
-// database.ref().child('/volunteers').orderByChild("Date").equalTo("Date" < day)
-// .once('value').then(function(snapshot){
-//     snapshot.forEach(childSnapshot){
-//       ref.child(childSnapshot.key.remove())
-//     });
-//   });
-
-      // if (childSnapshot.val().Date < day) {
-      //     console.log(childSnapshot.val().Date)
-      // }
-
-  
 // });
 
+//comparing dates
 
- $('tr.item').each(function(){
-  let dateCompare = $('.target-date').text()
-  console.log(dateCompare)
- });
+
 
 
 
@@ -211,11 +212,9 @@ const btnModal = document.getElementById('sign-in-modal')
 
 
 btnLogin.addEventListener('click', e => {
-
   const email = txtEmail.value;
   const pass = txtPassword.value;
   const auth = firebase.auth();
-
   const promise = auth.signInWithEmailAndPassword(email, pass);
   promise.catch(e => console.log(e.message))
 })
@@ -223,7 +222,6 @@ btnLogin.addEventListener('click', e => {
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
   if (firebaseUser) {
-
     btnLogOut.classList.remove('hide');
     btnRoster.classList.remove('hide')
     btnModal.classList.add('hide')
