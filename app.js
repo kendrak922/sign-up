@@ -83,16 +83,16 @@ $(document).ready(function () {
       'November',
       'December'
     ]
-        // Increment current date by day * i
-        const newDate = new Date(Date.now() + (1000 * 60 * 60 * 24 * i));
-        const d = newDate.getDate()
-        const y = newDate.getFullYear()
-        const monthIndex = newDate.getMonth()
-        const monthName = months[monthIndex]
-        const formatted = `${monthName} ${d}, ${y}`
-        $(tableHTML).appendTo('.home');
-        $('.today').eq(i).html(formatted);
-      }
+    // Increment current date by day * i
+    const newDate = new Date(Date.now() + (1000 * 60 * 60 * 24 * i));
+    const d = newDate.getDate()
+    const y = newDate.getFullYear()
+    const monthIndex = newDate.getMonth()
+    const monthName = months[monthIndex]
+    const formatted = `${monthName} ${d}, ${y}`
+    $(tableHTML).appendTo('.home');
+    $('.today').eq(i).html(formatted);
+  }
 
   $('.shifts-available').append(`<a class='waves-effect btn modal-trigger signup1' data-target='modal1'>Sign Up</a>`)
   $(`<div class='valign-wrapper'> <a class='btn-flat right-align admin-button modal-trigger' data-target='modal2' id='sign-in-modal'>Admin Sign in</a></div>`).appendTo('.home');
@@ -111,14 +111,14 @@ $(document).ready(function () {
   //   }
   // });
 
-
   $('.signup1').on('click', function () {
     let shift = $(this).closest('tr').find('.shift').text();
     let date = $(this).closest('tbody').eq(0).eq(0).find('.today').text();
+    let dateFormat = Date.parse(date)
     $('.modal').data('shift', shift);
-    $('.modal').data('date', date);
+    $('.modal').data('date', dateFormat);
   });
-
+  
   //cancel button
   $('.cancel').on('click', function () {
     $('#name').val('');
@@ -130,7 +130,6 @@ $(document).ready(function () {
 
 
   //add volunteer shift to database
-
   let name = '';
   let phone = '';
   let email = '';
@@ -138,105 +137,98 @@ $(document).ready(function () {
   let date = '';
 
 
+const today = Date.now() - (1000 * 60 * 60 * 24);
   //add to table
-  database.ref().child('/volunteers').orderByChild('Date').on("child_added", function (childSnapshot, prevChildKey) {
-
-    $('#volunteer-roster').append(`<tr class="item"><td class="target-date">${childSnapshot.val().Date}</td><td>${childSnapshot.val().Shift}</td><td>${childSnapshot.val().Name}</td><td>${childSnapshot.val().Phone}</td><td>${childSnapshot.val().Email}</td></tr>`)
+  database.ref().child('/volunteers').orderByChild('Date').startAt(today).on("child_added", function (childSnapshot, prevChildKey) {
+ 
+    let date = childSnapshot.val().Date
+   let formatted = (new Date(date)).toDateString()
+    $('#volunteer-roster').append(`<tr class="item"><td class="target-date">${formatted}</td><td>${childSnapshot.val().Shift}</td><td>${childSnapshot.val().Name}</td><td>${childSnapshot.val().Phone}</td><td>${childSnapshot.val().Email}</td></tr>`)
   })
-  
+
+
+  $('.submit').on('click', function (e) {
+    let phoneRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/
+    let emailRegex = /^\S+@\S+\.\S+$/
+
+    name = $('#name').val().trim();
+    phone = $('#phone').val().trim();
+    email = $('#email').val().trim();
+    shift = $('.modal').data('shift').trim();
+    date = $('.modal').data('date')
 
 
 
-//   database.ref().child('/volunteers').on("child_added", function (childSnapshot, prevChildKey) {
+    if ($('#phone').val() === '' || $('#name').val() === '' || $('#email').val() === '') {
+      e.preventDefault();
+    } else if (!phoneRegex.test(phone)) {
 
-// });
+      e.preventDefault()
+    } else if (!emailRegex.test(email)) {
+      e.preventDefault()
+    } else {
 
-//comparing dates
-
-
-
-
-
-
-$('.submit').on('click', function (e) {
-  let phoneRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/
-  let emailRegex = /^\S+@\S+\.\S+$/
-
-  name = $('#name').val().trim();
-  phone = $('#phone').val().trim();
-  email = $('#email').val().trim();
-  shift = $('.modal').data('shift').trim();
-  date = $('.modal').data('date').trim();
-
-  if ($('#phone').val() === '' || $('#name').val() === '' || $('#email').val() === '') {
-    e.preventDefault();
-  } else if (!phoneRegex.test(phone)) {
-    
-    e.preventDefault()
-  } else if (!emailRegex.test(email)) {
-    e.preventDefault()
-  } else {
-
-    let volunteer = {
-      Name: name,
-      Phone: phone,
-      Email: email,
-      Shift: shift,
-      Date: date,
-    };
+      let volunteer = {
+        Name: name,
+        Phone: phone,
+        Email: email,
+        Shift: shift,
+        Date: date,
+      };
 
 
-    database.ref().child('volunteers').push(volunteer)
+      database.ref().child('volunteers').push(volunteer)
 
-    $('#name').val('');
-    $('#phone').val('');
-    $('#email').val('');
-    $('.modal').data('shift', '')
-    $('.modal').data('date', '')
+      $('#name').val('');
+      $('#phone').val('');
+      $('#email').val('');
+      $('.modal').data('shift', '')
+      $('.modal').data('date', '')
+   
 
-    $('.submit').addClass('modal-close')
-  }
-})
-var validate = new Bouncer('form', {
-  patterns: {
-    email: /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*(\.\w{2,})+$/,
-    tel: /[-+]?[0-9]*[.,]?[0-9]+/,
-  }
-});
+      $('.submit').addClass('modal-close')
+    }
+  })
+  var validate = new Bouncer('form', {
+    patterns: {
+      email: /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*(\.\w{2,})+$/,
+      tel: /[-+]?[0-9]*[.,]?[0-9]+/,
+    }
+  });
 
-///authorization
-const btnLogin = document.getElementById('adminSubmit');
-const btnLogOut = document.getElementById('btn-logout');
-const btnRoster = document.getElementById('roster')
-const btnModal = document.getElementById('sign-in-modal')
-
-
-btnLogin.addEventListener('click', e => {
-  const email = txtEmail.value;
-  const pass = txtPassword.value;
-  const auth = firebase.auth();
-  const promise = auth.signInWithEmailAndPassword(email, pass);
-  promise.catch(e => console.log(e.message))
-})
+  ///authorization
+  const btnLogin = document.getElementById('adminSubmit');
+  const btnLogOut = document.getElementById('btn-logout');
+  const btnRoster = document.getElementById('roster')
+  const btnModal = document.getElementById('sign-in-modal')
 
 
-firebase.auth().onAuthStateChanged(firebaseUser => {
-  if (firebaseUser) {
-    btnLogOut.classList.remove('hide');
-    btnRoster.classList.remove('hide')
-    btnModal.classList.add('hide')
-  } else {
+  btnLogin.addEventListener('click', e => {
+    const email = txtEmail.value;
+    const pass = txtPassword.value;
+    const auth = firebase.auth();
+    const promise = auth.signInWithEmailAndPassword(email, pass);
+    promise.catch(e => console.log(e.message))
+  })
 
-    btnLogOut.classList.add('hide');
-    btnRoster.classList.add('hide')
-    btnModal.classList.remove('hide')
-    console.log('not logged in')
-  }
-})
 
-btnLogOut.addEventListener('click', e => {
-  firebase.auth().signOut();
-})
+  firebase.auth().onAuthStateChanged(firebaseUser => {
+    if (firebaseUser) {
+      btnLogOut.classList.remove('hide');
+      btnRoster.classList.remove('hide')
+      btnModal.classList.add('hide')
+    } else {
+
+      btnLogOut.classList.add('hide');
+      btnRoster.classList.add('hide')
+      btnModal.classList.remove('hide')
+      console.log('not logged in')
+    }
+  })
+
+  btnLogOut.addEventListener('click', e => {
+    firebase.auth().signOut();
+  })
 
 
 });
