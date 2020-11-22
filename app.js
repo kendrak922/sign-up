@@ -3,15 +3,15 @@ $(document).ready(function () {
 
 
   var firebaseConfig = {
-    apiKey: "AIzaSyAj_PWrOTX-ywI3RTU4kFQzX2Nrw7_OEvI",
-    authDomain: "volunteer-dev-3ced0.firebaseapp.com",
-    databaseURL: "https://volunteer-dev-3ced0.firebaseio.com/",
-    projectId: "volunteer-dev-3ced0",
-    storageBucket: "volunteer-dev-3ced0.appspot.com",
-    messagingSenderId: "607646295816",
-    appId: "1:607646295816:web:8c546b0a17b4110c992ebd",
-    measurementId: "G-EXFJJDYCW1"
-  };
+      apiKey: "AIzaSyAj_PWrOTX-ywI3RTU4kFQzX2Nrw7_OEvI",
+      authDomain: "volunteer-dev-3ced0.firebaseapp.com",
+      databaseURL: "https://volunteer-dev-3ced0.firebaseio.com/",
+      projectId: "volunteer-dev-3ced0",
+      storageBucket: "volunteer-dev-3ced0.appspot.com",
+      messagingSenderId: "607646295816",
+      appId: "1:607646295816:web:8c546b0a17b4110c992ebd",
+      measurementId: "G-EXFJJDYCW1"
+  }
   // Initialize Firebase
 
   firebase.initializeApp(firebaseConfig);
@@ -95,8 +95,8 @@ $(document).ready(function () {
   }
 
   $('.shifts-available').append(`<a class='waves-effect btn modal-trigger signup1' data-target='modal1'>Sign Up</a>`)
-  $(`<div class='valign-wrapper'> <a class='btn-flat right-align admin-button modal-trigger' data-target='modal2' id='sign-in-modal'>Admin Sign in</a></div>`).appendTo('.home');
-  $(`<div class='valign-wrapper'><a href="./admin.html" class='btn-flat hide' id='roster'>View Roster</a><a href="#!" class="waves-effect btn-flat hide" id='btn-logout'>Sign Out</a></div>`).appendTo('.home');
+  $(`<div class='valign-wrapper'> <a class='waves-effect waves-light btn-small right-align admin-button modal-trigger' data-target='modal2' id='sign-in-modal'>Admin Sign in</a></div>`).appendTo('.home');
+  $(`<div class='valign-wrapper'><a href="./admin.html" class='waves-light btn-small hide' id='roster'>View Roster</a><a href="#!" class="waves-effect waves-light btn-small hide" id='btn-logout'>Sign Out</a></div>`).prependTo('.home');
   //subtract
   // $('.signup1').on('click', function () {
   //   if (count > 0) {
@@ -162,7 +162,6 @@ const today = Date.now() - (1000 * 60 * 60 * 24);
     if ($('#phone').val() === '' || $('#name').val() === '' || $('#email').val() === '') {
       e.preventDefault();
     } else if (!phoneRegex.test(phone)) {
-
       e.preventDefault()
     } else if (!emailRegex.test(email)) {
       e.preventDefault()
