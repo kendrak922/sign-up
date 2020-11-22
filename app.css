@@ -1,45 +1,68 @@
-h1{
-    
-    background-color:#02C3BD;
-    border-radius: 10px;
-    padding: 10px;
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap");
+h1 {
+  background-color: #FF0054;
+  border-radius: 10px;
+  padding: 10px;
+  color: #FFFAFF;
 }
 
-.btn{
-    margin: 0 20px;
-    background-color: #037171;
+.btn {
+  margin: 0 20px;
+  background-color: #3A1772;
 }
-body{
-    background-color: #FBFBFF;
+
+body {
+  background-color: #FFFAFF;
+  font-family: "Nunito Sans", sans-serif;
 }
-btn:hover{
-    background-color:#02C3BD;
+
+.btn:hover {
+  background-color: #A5F8D3;
+  color: black;
 }
-table.highlight>tbody>tr:hover{
-    background-color:#F3F0FA;
+
+table.highlight > tbody > tr:hover {
+  background-color: #ECEBE9;
 }
-.valign-wrapper{
-padding: 30px;
+
+#btn-logout, #roster, .admin-button {
+  background-color: #A5F8D3;
+  color: black;
+  border-radius: 5%;
 }
-a{
-    margin: auto;
+
+.valign-wrapper {
+  padding: 30px;
 }
+
+a {
+  margin: auto;
+}
+
 @media only screen and (max-width: 768px) {
-    .modal-footer .btn-flat{
-    
-        font-size: 12px;
-    }
-    .modal h2{
-       font-size: 30px;
-    }
-    .table-container{
-        max-width: 700px;
-     overflow: scroll;
-    }
-    .table-header{
-        position: sticky;
-        font-size: 3rem;
-        padding: 0;
-        margin: 1rem;
-    }
+  .btn {
+    font-size: 12px;
+  }
+
+  .modal-footer .btn-flat {
+    font-size: 12px;
+  }
+
+  .modal h2 {
+    font-size: 30px;
+  }
+
+  .table-container {
+    max-width: 700px;
+    overflow: scroll;
+  }
+
+  .table-header {
+    position: sticky;
+    font-size: 3rem;
+    padding: 0;
+    margin: 1rem;
+  }
 }
+
+/*# sourceMappingURL=app.css.map */

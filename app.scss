@@ -1,0 +1,76 @@
+///variables
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap');
+$background-color: #FFFAFF;
+$primary-color:#3A1772;
+$statement-color:#FF0054;
+$highlight-color:#A5F8D3;
+$white: #ECEBE9;
+
+$primary-font: 'Nunito Sans', sans-serif;
+
+
+
+
+////
+
+
+
+
+h1{
+    
+    background-color:$statement-color;
+    border-radius: 10px;
+    padding: 10px;
+    color:$background-color;
+}   
+// table{
+//     background-color: $white;
+// }
+
+.btn{
+    margin: 0 20px;
+    background-color: $primary-color;
+}
+body{
+    background-color: $background-color;
+    font-family: $primary-font;
+}
+.btn:hover{
+    background-color: $highlight-color;
+    color: black;
+}
+table.highlight>tbody>tr:hover{
+    background-color: $white;
+}
+#btn-logout, #roster,.admin-button{
+    background-color: $highlight-color;
+    color: black;
+    border-radius: 5%;
+}
+.valign-wrapper{
+padding: 30px;
+}
+a{
+    margin: auto;
+}
+@media only screen and (max-width: 768px) {
+    .btn{
+        font-size:12px;
+    }
+    .modal-footer .btn-flat{
+        font-size: 12px;
+    }
+    .modal h2{
+       font-size: 30px;
+    }
+    .table-container{
+        max-width: 700px;
+     overflow: scroll;
+    }
+    .table-header{
+        position: sticky;
+        font-size: 3rem;
+        padding: 0;
+        margin: 1rem;
+    }
+}
