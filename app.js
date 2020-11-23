@@ -36,7 +36,7 @@ $(document).ready(function () {
     <tr>
         <th>Date</th>
         <th>Time</th>
-        <th>#Availble Shifts</th>
+        <th></th>
     </tr>
 </thead>
 <tbody>
@@ -50,17 +50,17 @@ $(document).ready(function () {
     <tr>
         <td></td>
         <td class='shift'>2:30-4:30</td>
-        <td class='shifts-available'>2</td>
+        <td class='shifts-available'></td>
     </tr>
     <tr>
         <td></td>
         <td class='shift'>4:30-6:30</td>
-        <td class='shifts-available'>2</td>
+        <td class='shifts-available'></td>
     </tr>
     <tr>
         <td></td>
         <td class='shift'>6:30-8:30</td>
-        <td class='shifts-available'>2</td>
+        <td class='shifts-available'></td>
     </tr>
 </tbody>
 </table>`
@@ -95,8 +95,8 @@ $(document).ready(function () {
   }
 
   $('.shifts-available').append(`<a class='waves-effect btn modal-trigger signup1' data-target='modal1'>Sign Up</a>`)
-  $(`<div class='valign-wrapper'> <a class='waves-effect waves-light btn-small right-align admin-button modal-trigger' data-target='modal2' id='sign-in-modal'>Admin Sign in</a></div>`).appendTo('.home');
-  $(`<div class='valign-wrapper'><a href="./admin.html" class='waves-light btn-small hide' id='roster'>View Roster</a><a href="#!" class="waves-effect waves-light btn-small hide" id='btn-logout'>Sign Out</a></div>`).appendTo('.home');
+  $(`<div class='valign-wrapper'> <a class='waves-effect waves-light btn-small right-align admin-button modal-trigger' data-target='modal2' id='sign-in-modal'>Admin Login</a></div>`).appendTo('.home');
+  $(`<div class='valign-wrapper'><a href="./admin.html" class='waves-light btn-small hide' id='roster'>View Roster</a><a href="#!" class="waves-effect waves-light btn-small hide" id='btn-logout'>Log Out</a></div>`).appendTo('.home');
   //subtract
   // $('.signup1').on('click', function () {
   //   if (count > 0) {

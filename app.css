@@ -16,7 +16,7 @@ body {
   font-family: "Nunito Sans", sans-serif;
 }
 
-.btn:hover {
+.btn-small:hover, .btn:hover {
   background-color: #A5F8D3;
   color: black;
 }
@@ -42,6 +42,7 @@ a {
 @media only screen and (max-width: 768px) {
   .btn {
     font-size: 12px;
+    width: 8rem;
   }
 
   .modal-footer .btn-flat {
