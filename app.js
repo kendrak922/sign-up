@@ -42,24 +42,24 @@ $(document).ready(function () {
 <tbody>
     <tr>
         <td><span class='today'></span></td>
-        <td class='shift'>10:30-2:30</td>
+        <td class='shift'>1</td>
         <td class='shifts-available'>
         <span id='clickValue'><p></p></span>
         </td>
     </tr>
     <tr>
         <td></td>
-        <td class='shift'>2:30-4:30</td>
+        <td class='shift'>2</td>
         <td class='shifts-available'></td>
     </tr>
     <tr>
         <td></td>
-        <td class='shift'>4:30-6:30</td>
+        <td class='shift'>3</td>
         <td class='shifts-available'></td>
     </tr>
     <tr>
         <td></td>
-        <td class='shift'>6:30-8:30</td>
+        <td class='shift'>4</td>
         <td class='shifts-available'></td>
     </tr>
 </tbody>
@@ -97,19 +97,7 @@ $(document).ready(function () {
   $('.shifts-available').append(`<a class='waves-effect btn modal-trigger signup1' data-target='modal1'>Sign Up</a>`)
   $(`<div class='valign-wrapper'> <a class='waves-effect waves-light btn-small right-align admin-button modal-trigger' data-target='modal2' id='sign-in-modal'>Admin Login</a></div>`).appendTo('.home');
   $(`<div class='valign-wrapper'><a href="./admin.html" class='waves-light btn-small hide' id='roster'>View Roster</a><a href="#!" class="waves-effect waves-light btn-small hide" id='btn-logout'>Log Out</a></div>`).appendTo('.home');
-  //subtract
-  // $('.signup1').on('click', function () {
-  //   if (count > 0) {
-  //     count--
-  //     firebase.database().ref().child('shift-count').set({
-  //       firstShift: count
-  //     })
-  //     return count;
-  //   } else {
-  //     $(this).removeClass('modal-trigger')
-  //     M.toast({ html: 'No Availble Shifts' })
-  //   }
-  // });
+
 
   $('.signup1').on('click', function () {
     let shift = $(this).closest('tr').find('.shift').text();
@@ -135,11 +123,12 @@ $(document).ready(function () {
   let email = '';
   let shift = '';
   let date = '';
+  let sortOrder = '';
 
 
 const today = Date.now() - (1000 * 60 * 60 * 24);
   //add to table
-  database.ref().child('/volunteers').orderByChild('Date').startAt(today).on("child_added", function (childSnapshot, prevChildKey) {
+  database.ref().child('/volunteers').orderByChild('sortOrder').startAt(today).on("child_added", function (childSnapshot, prevChildKey) {
  
     let date = childSnapshot.val().Date
    let formatted = (new Date(date)).toDateString()
@@ -173,6 +162,7 @@ const today = Date.now() - (1000 * 60 * 60 * 24);
         Email: email,
         Shift: shift,
         Date: date,
+        sortOrder: date + shift,
       };
 
 
