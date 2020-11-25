@@ -42,24 +42,24 @@ $(document).ready(function () {
 <tbody>
     <tr>
         <td><span class='today'></span></td>
-        <td class='shift'>1</td>
+        <td class='shift' shift=1>10:30am - 12:30pm</td>
         <td class='shifts-available'>
         <span id='clickValue'><p></p></span>
         </td>
     </tr>
     <tr>
         <td></td>
-        <td class='shift'>2</td>
+        <td class='shift' shift=2>12:30pm - 2:30pm</td>
         <td class='shifts-available'></td>
     </tr>
     <tr>
         <td></td>
-        <td class='shift'>3</td>
+        <td class='shift' shift=3>2:30am - 4:30pm</td>
         <td class='shifts-available'></td>
     </tr>
     <tr>
         <td></td>
-        <td class='shift'>4</td>
+        <td class='shift' shift=4>4:30am - 6:30pm</td>
         <td class='shifts-available'></td>
     </tr>
 </tbody>
@@ -100,7 +100,8 @@ $(document).ready(function () {
 
 
   $('.signup1').on('click', function () {
-    let shift = $(this).closest('tr').find('.shift').text();
+    let shift = $(this).closest('tr').find('.shift').attr("shift");
+    console.log(shift)
     let date = $(this).closest('tbody').eq(0).eq(0).find('.today').text();
     let dateFormat = Date.parse(date)
     $('.modal').data('shift', shift);
@@ -129,10 +130,23 @@ $(document).ready(function () {
 const today = Date.now() - (1000 * 60 * 60 * 24);
   //add to table
   database.ref().child('/volunteers').orderByChild('sortOrder').startAt(today).on("child_added", function (childSnapshot, prevChildKey) {
- 
-    let date = childSnapshot.val().Date
-   let formatted = (new Date(date)).toDateString()
-    $('#volunteer-roster').append(`<tr class="item"><td class="target-date">${formatted}</td><td>${childSnapshot.val().Shift}</td><td>${childSnapshot.val().Name}</td><td>${childSnapshot.val().Phone}</td><td>${childSnapshot.val().Email}</td></tr>`)
+  let date = childSnapshot.val().Date
+  let formatted = (new Date(date)).toDateString()
+  let shift = childSnapshot.val().Shift
+function formatShift(shift) {
+  if(shift == 1){
+    return shift = "10:30am - 12:30pm"
+  } else if(shift == 2){
+    return shift = "12:30pm - 2:30pm "
+  }else if(shift == 3){
+    return shift = "2:30pm - 4:30pm"
+  }else{
+    return shift = "4:30pm - 6:30pm"
+  }
+}
+let formattedShift = formatShift(shift)
+
+    $('#volunteer-roster').append(`<tr class="item"><td class="target-date">${formatted}</td><td>${formattedShift}</td><td>${childSnapshot.val().Name}</td><td>${childSnapshot.val().Phone}</td><td>${childSnapshot.val().Email}</td></tr>`)
   })
 
 
