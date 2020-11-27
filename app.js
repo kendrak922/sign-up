@@ -19,18 +19,6 @@ $(document).ready(function () {
   const auth = firebase.auth();
   M.AutoInit();
 
-  let count = 2;
-  //display count
-  // firebase.database().ref().on('value', function (snapshot) {
-  //   count = snapshot.val().firstShift
-  //   $('#clickValue').html(count);
-  // })
-
-
-
-
-
-
   const tableHTML = `<table class='highlight centered'>
 <thead>
     <tr>
@@ -101,7 +89,6 @@ $(document).ready(function () {
 
   $('.signup1').on('click', function () {
     let shift = $(this).closest('tr').find('.shift').attr("shift");
-    console.log(shift)
     let date = $(this).closest('tbody').eq(0).eq(0).find('.today').text();
     let dateFormat = Date.parse(date)
     $('.modal').data('shift', shift);
@@ -128,23 +115,24 @@ $(document).ready(function () {
 
 
 const today = Date.now() - (1000 * 60 * 60 * 24);
+console.log(today)
   //add to table
   database.ref().child('/volunteers').orderByChild('sortOrder').startAt(today).on("child_added", function (childSnapshot, prevChildKey) {
   let date = childSnapshot.val().Date
   let formatted = (new Date(date)).toDateString()
-  let shift = childSnapshot.val().Shift
-function formatShift(shift) {
+  let shiftNew = childSnapshot.val().Shift
+function formatShift(shiftNew) {
   if(shift == 1){
-    return shift = "10:30am - 12:30pm"
-  } else if(shift == 2){
-    return shift = "12:30pm - 2:30pm "
-  }else if(shift == 3){
-    return shift = "2:30pm - 4:30pm"
+    return shiftNew = "10:30am - 12:30pm"
+  } else if(shiftNew == 2){
+    return shiftNew = "12:30pm - 2:30pm "
+  }else if(shiftNew == 3){
+    return shiftNewt = "2:30pm - 4:30pm"
   }else{
-    return shift = "4:30pm - 6:30pm"
+    return shiftNew = "4:30pm - 6:30pm"
   }
 }
-let formattedShift = formatShift(shift)
+let formattedShift = formatShift(shiftNew)
 
     $('#volunteer-roster').append(`<tr class="item"><td class="target-date">${formatted}</td><td>${formattedShift}</td><td>${childSnapshot.val().Name}</td><td>${childSnapshot.val().Phone}</td><td>${childSnapshot.val().Email}</td></tr>`)
   })
