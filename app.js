@@ -3,14 +3,14 @@ $(document).ready(function () {
 
 
   var firebaseConfig = {
-      apiKey: "AIzaSyAj_PWrOTX-ywI3RTU4kFQzX2Nrw7_OEvI",
-      authDomain: "volunteer-dev-3ced0.firebaseapp.com",
-      databaseURL: "https://volunteer-dev-3ced0.firebaseio.com/",
-      projectId: "volunteer-dev-3ced0",
-      storageBucket: "volunteer-dev-3ced0.appspot.com",
-      messagingSenderId: "607646295816",
-      appId: "1:607646295816:web:8c546b0a17b4110c992ebd",
-      measurementId: "G-EXFJJDYCW1"
+    apiKey: "AIzaSyAj_PWrOTX-ywI3RTU4kFQzX2Nrw7_OEvI",
+    authDomain: "volunteer-dev-3ced0.firebaseapp.com",
+    databaseURL: "https://volunteer-dev-3ced0.firebaseio.com/",
+    projectId: "volunteer-dev-3ced0",
+    storageBucket: "volunteer-dev-3ced0.appspot.com",
+    messagingSenderId: "607646295816",
+    appId: "1:607646295816:web:8c546b0a17b4110c992ebd",
+    measurementId: "G-EXFJJDYCW1"
   }
   // Initialize Firebase
 
@@ -18,6 +18,7 @@ $(document).ready(function () {
   const database = firebase.database();
   const auth = firebase.auth();
   M.AutoInit();
+  
 
   const tableHTML = `<table class='highlight centered'>
 <thead>
@@ -88,13 +89,13 @@ $(document).ready(function () {
 
 
   $('.signup1').on('click', function () {
-    let shift = $(this).closest('tr').find('.shift').attr("shift");
+    let shift = parseInt($(this).closest('tr').find('.shift').attr("shift"));
     let date = $(this).closest('tbody').eq(0).eq(0).find('.today').text();
     let dateFormat = Date.parse(date)
     $('.modal').data('shift', shift);
     $('.modal').data('date', dateFormat);
   });
-  
+
   //cancel button
   $('.cancel').on('click', function () {
     $('#name').val('');
@@ -102,6 +103,11 @@ $(document).ready(function () {
     $('#email').val('');
     $('.modal').data('shift', '')
     $('.modal').data('date', '')
+    $('#name-error').remove()
+    $('#phone-error').remove()
+    $('#email-error').remove()
+    $('input').removeClass('valid')
+    $('input').removeClass('invalid')
   })
 
 
@@ -114,50 +120,75 @@ $(document).ready(function () {
   let sortOrder = '';
 
 
-const today = Date.now() - (1000 * 60 * 60 * 24);
-console.log(today)
+  const today = Date.now() - (1000 * 60 * 60 * 24);
+
   //add to table
   database.ref().child('/volunteers').orderByChild('sortOrder').startAt(today).on("child_added", function (childSnapshot, prevChildKey) {
-  let date = childSnapshot.val().Date
-  let formatted = (new Date(date)).toDateString()
-  let shiftNew = childSnapshot.val().Shift
-function formatShift(shiftNew) {
-  if(shift == 1){
-    return shiftNew = "10:30am - 12:30pm"
-  } else if(shiftNew == 2){
-    return shiftNew = "12:30pm - 2:30pm "
-  }else if(shiftNew == 3){
-    return shiftNewt = "2:30pm - 4:30pm"
-  }else{
-    return shiftNew = "4:30pm - 6:30pm"
-  }
-}
-let formattedShift = formatShift(shiftNew)
+    let date = childSnapshot.val().Date
+    let formatted = (new Date(date)).toDateString()
+    let shiftNew = childSnapshot.val().Shift
+    function formatShift(shiftNew) {
+      if (shiftNew == 1) {
+        return shiftNew = "10:30am - 12:30pm"
+      } else if (shiftNew == 2) {
+        return shiftNew = "12:30pm - 2:30pm "
+      } else if (shiftNew == 3) {
+        return shiftNew = "2:30pm - 4:30pm"
+      } else {
+        return shiftNew = "4:30pm - 6:30pm"
+      }
+    }
+    let formattedShift = formatShift(shiftNew)
 
     $('#volunteer-roster').append(`<tr class="item"><td class="target-date">${formatted}</td><td>${formattedShift}</td><td>${childSnapshot.val().Name}</td><td>${childSnapshot.val().Phone}</td><td>${childSnapshot.val().Email}</td></tr>`)
   })
 
+  ////form validation
+  // $.validator.setDefaults({
+  //   errorClass: 'invalid',
+  //   validClass: "valid",
+  //   errorPlacement: function(error, element) {
+  //     $(element)
+  //       .closest("form")
+  //       .find("label[for='" + element.attr("id") + "']")
+  //       .attr('data-error', error.text());
+  //   },
+  // });
+
+let form = $('#form')
+  $(form).validate({
+    rules: {
+      name: "required",
+      phone: {
+        required: true,
+        phoneUS: true
+      },
+      email: {
+        required: true,
+        email: true
+      }
+    },
+    messages: {
+      name: "Please specify your name",
+      email: {
+        required: "We need your email address to contact you",
+        email: "Your email address must be in the format of name@domain.com",
+      },
+      phone: {
+        required: "We need your phone number to contact you",
+        phone: "Please enter a valid phone number",
+      }
+    }
+  });
 
   $('.submit').on('click', function (e) {
-    let phoneRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/
-    let emailRegex = /^\S+@\S+\.\S+$/
-
     name = $('#name').val().trim();
     phone = $('#phone').val().trim();
     email = $('#email').val().trim();
-    shift = $('.modal').data('shift').trim();
+    shift = $('.modal').data('shift')
     date = $('.modal').data('date')
 
-
-
-    if ($('#phone').val() === '' || $('#name').val() === '' || $('#email').val() === '') {
-      e.preventDefault();
-    } else if (!phoneRegex.test(phone)) {
-      e.preventDefault()
-    } else if (!emailRegex.test(email)) {
-      e.preventDefault()
-    } else {
-
+    if (form.valid()) {
       let volunteer = {
         Name: name,
         Phone: phone,
@@ -167,7 +198,6 @@ let formattedShift = formatShift(shiftNew)
         sortOrder: date + shift,
       };
 
-
       database.ref().child('volunteers').push(volunteer)
 
       $('#name').val('');
@@ -175,17 +205,12 @@ let formattedShift = formatShift(shiftNew)
       $('#email').val('');
       $('.modal').data('shift', '')
       $('.modal').data('date', '')
-   
 
       $('.submit').addClass('modal-close')
+      $('input').removeClass('valid')
     }
   })
-  var validate = new Bouncer('form', {
-    patterns: {
-      email: /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*(\.\w{2,})+$/,
-      tel: /[-+]?[0-9]*[.,]?[0-9]+/,
-    }
-  });
+
 
   ///authorization
   const btnLogin = document.getElementById('adminSubmit');
