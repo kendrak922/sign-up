@@ -18,6 +18,7 @@ $(document).ready(function () {
   const database = firebase.database();
   const auth = firebase.auth();
   M.AutoInit();
+  M.updateTextFields();
   
 
   const tableHTML = `<table class='highlight centered'>
