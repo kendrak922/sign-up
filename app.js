@@ -18,7 +18,6 @@ $(document).ready(function () {
   const database = firebase.database();
   const auth = firebase.auth();
   M.AutoInit();
-  M.updateTextFields();
   
 
   const tableHTML = `<table class='highlight centered'>
@@ -156,6 +155,7 @@ $(document).ready(function () {
   //   },
   // });
 
+
 let form = $('#form')
   $(form).validate({
     rules: {
@@ -170,6 +170,7 @@ let form = $('#form')
       }
     },
     messages: {
+      errorElement: 'span',
       name: "Please specify your name",
       email: {
         required: "We need your email address to contact you",
@@ -179,7 +180,16 @@ let form = $('#form')
         required: "We need your phone number to contact you",
         phone: "Please enter a valid phone number",
       }
+    },
+    errorElement: 'div',
+errorPlacement: function (error, element) {
+    var placement = $(element).data('error');
+    if (placement) {
+        $(placement).append(error)
+    } else {
+        error.insertAfter(element);
     }
+}
   });
 
   $('.submit').on('click', function (e) {
