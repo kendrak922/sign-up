@@ -9,7 +9,6 @@
     "jquery": "^3.5.1",
     "jquery-validation": "^1.19.2",
     "materialize": "^1.0.0",
-    "moment": "^2.27.0",
     "node-forge": "^0.10.0"
   },
   "devDependencies": {},

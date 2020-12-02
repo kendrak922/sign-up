@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="./app.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="../app.css" media="screen,projection" />
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js></script>
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
@@ -42,12 +42,12 @@
                     <div class="row">
                         <div class="input-field col s12">
                             <input id='email' name='email' type='email' class='validate'>
-                            <label for='email' class="active">Email</label>
+                            <label for='email'>Email</label>
                         </div>
                     </div>
                     <div class="modal-footer">
                     <a href="#!" class="modal-close waves-effect btn-flat cancel">Cancel</a>
-                        <a href='#!' class="waves-effect btn-flat submit" value='submit'>Sign Up</a>
+                    <a href='#!' class="waves-effect btn-flat submit" value='submit'>Sign Up</a>
                     </div>
                 </form>
             </div>
@@ -58,25 +58,25 @@
                 <form class="form col s12">
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="txtEmail" name="email" type='email' required>
-                            <label for='txtEmail' class="active">Email</label>
+                            <input id="txtEmail" name="email" type='email' class='validate'>
+                            <label for='txtEmail'>Email</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id='txtPassword' name='password' type='password' required>
-                            <label for='txtPassword' class="active">Password</label>
+                            <input id='txtPassword' name='password' type='password'>
+                            <label for='txtPassword'>Password</label>
                         </div>
                     </div>
                 </form>
                 <div class="modal-footer">
                     <a href="#!" class="modal-close waves-effect btn-flat cancel">Cancel</a>
-                    <a href="#!" class="modal-close waves-effect btn-flat" id='adminSubmit' value='admin-submit'>Sign In</a>
+                    <a href="#!" class="waves-effect btn-flat" id='adminSubmit' value='admin-submit'>Sign In</a>
                 </div>
             </div>
         </div>
     </div>
-    <script src=app.js></script>
+    <script src='../app.js'></script>
 </body>
 
 </html>

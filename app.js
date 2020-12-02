@@ -157,9 +157,11 @@ $(document).ready(function () {
 
 
 let form = $('#form')
-  $(form).validate({
+$(".form").each(function(){
+  $(this).validate({
     rules: {
       name: "required",
+      password: "required",
       phone: {
         required: true,
         phoneUS: true
@@ -170,7 +172,6 @@ let form = $('#form')
       }
     },
     messages: {
-      errorElement: 'span',
       name: "Please specify your name",
       email: {
         required: "We need your email address to contact you",
@@ -191,6 +192,7 @@ errorPlacement: function (error, element) {
     }
 }
   });
+});
 
   $('.submit').on('click', function (e) {
     name = $('#name').val().trim();
@@ -214,14 +216,14 @@ errorPlacement: function (error, element) {
       $('#name').val('');
       $('#phone').val('');
       $('#email').val('');
-      $('.modal').data('shift', '')
-      $('.modal').data('date', '')
+      $('.modal').data('shift', '');
+      $('.modal').data('date', '');
 
-      $('.submit').addClass('modal-close')
-      $('input').removeClass('valid')
+      $('.submit').addClass('modal-close');
+      $('input').removeClass('valid');
+      M.toast({html: "You're signed up!"})
     }
   })
-
 
   ///authorization
   const btnLogin = document.getElementById('adminSubmit');
@@ -235,12 +237,13 @@ errorPlacement: function (error, element) {
     const pass = txtPassword.value;
     const auth = firebase.auth();
     const promise = auth.signInWithEmailAndPassword(email, pass);
-    promise.catch(e => console.log(e.message))
+    promise.catch(e => M.toast({html: "Sign-in unsuccessful"}))
   })
 
 
   firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
+      $('#adminSubmit').addClass('modal-close');
       btnLogOut.classList.remove('hide');
       btnRoster.classList.remove('hide')
       btnModal.classList.add('hide')
@@ -249,7 +252,6 @@ errorPlacement: function (error, element) {
       btnLogOut.classList.add('hide');
       btnRoster.classList.add('hide')
       btnModal.classList.remove('hide')
-      console.log('not logged in')
     }
   })
 

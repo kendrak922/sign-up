@@ -1,11 +1,11 @@
 ///variables
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap');
 $background-color: #FFFAFF;
+$primary-color: lighten(#3A1772, 2) !default;
 $primary-color:#3A1772;
 $statement-color:#FF0054;
 $highlight-color:#A5F8D3;
 $white: #ECEBE9;
-
 $primary-font: 'Nunito Sans', sans-serif;
 
 
@@ -44,10 +44,6 @@ a{
     margin: auto;
 }
 
-.input-field.active {
-     border-bottom: 1px solid $primary-color;
-     box-shadow: 0 1px 0 0 $primary-color;
-   }
 @media only screen and (max-width: 768px) {
     .btn{
         font-size:12px;
