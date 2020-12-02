@@ -15,11 +15,11 @@
   ## How it Works
   
   ## As a User
-    A User lands on the website and immediately see the available times to volunteer. They then sign up for whichever shift they want. If all their information is entered correctly, they get a notification that they are signed up for the shift.
+  A User lands on the website and immediately see the available times to volunteer. They then sign up for whichever shift they want. If all their information is entered correctly, they get a notification that they are signed up for the shift.
   
   
   ## As an Admin
-    An admin can login at the bottom of the page. From their they can view the volunteer roster for the upcoming week. Once the date for the shift has passed, it it removed from the webpage. 
+  An admin can login at the bottom of the page. From their they can view the volunteer roster for the upcoming week. Once the date for the shift has passed, it it removed from the webpage. 
     
     
 ## Credits
