@@ -20,6 +20,10 @@ $(document).ready(function () {
   M.AutoInit();
   
 
+  $("#I0_1607530531437").load(function () {
+    $("#I0_1607530531437").contents().find('frame:first').attr('title', 'Firebase Hosting');
+});
+
   const tableHTML = `<table class='highlight centered'>
 <thead>
     <tr>
@@ -33,7 +37,6 @@ $(document).ready(function () {
         <td><span class='today'></span></td>
         <td class='shift' shift=1>10:30am - 12:30pm</td>
         <td class='shifts-available'>
-        <span id='clickValue'><p></p></span>
         </td>
     </tr>
     <tr>

@@ -66,3 +66,20 @@ a{
         margin: 1rem;
     }
 }
+
+@media only screen and (max-width: 320px) {
+    .btn{
+        font-size:10px;
+        width: 7rem;
+    }
+    .modal-footer .btn-flat{
+        font-size: 10px;
+    }
+    .modal h2{
+       font-size: 20px;
+    }
+    .modal .modal-footer .btn-flat {
+        margin: 3px 0;
+    }
+
+}
