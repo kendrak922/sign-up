@@ -20,10 +20,6 @@ $(document).ready(function () {
   M.AutoInit();
   
 
-  $("#I0_1607530531437").load(function () {
-    $("#I0_1607530531437").contents().find('frame:first').attr('title', 'Firebase Hosting');
-});
-
   const tableHTML = `<table class='highlight centered'>
 <thead>
     <tr>
