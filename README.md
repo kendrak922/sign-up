@@ -24,7 +24,7 @@
     
 ## Credits
   Shoutout to all the wonderful community organizers in Minneapolis.
-## Licsense 
+## License 
   
   
 
