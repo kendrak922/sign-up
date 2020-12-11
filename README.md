@@ -9,7 +9,7 @@
   * jQuery Library
   * jQuery Validation Plugin
   * Materialize UI Framework
-  * SCSS
+  * Sass
   
   
   ## How it Works
