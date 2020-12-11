@@ -19,8 +19,10 @@
   
   ![](volunteer-ux.gif)
   ## As an Admin
-  An admin can login at the bottom of the page. From their they can view the volunteer roster for the upcoming week. Once the date for the shift has passed, it it removed from the webpage. 
-    
+  An admin can login at the bottom of the page. From their they can view the volunteer roster for the upcoming week. Once the date for the shift has passed, it is removed from the webpage, but stays in the database. To test out admin view, you can use the following login information:
+       Email: admin@admin.com
+        Password: adminadmin
+   ![](volunteer-roster.png) 
     
 ## Credits
   Shoutout to all the wonderful community organizers in Minneapolis.
