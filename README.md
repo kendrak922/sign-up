@@ -27,6 +27,6 @@
 ## Credits
   Shoutout to all the wonderful community organizers in Minneapolis.
 ## License 
-  
+  Copyright (c) 2020 Kendra Kyndberg
   
 
